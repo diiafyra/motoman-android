@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Bottom navigation with Overview, Fuel, Maintenance and Nearby tabs, using type-safe routes.
+- Add, edit and delete vehicles. Deleting asks for confirmation and removes the vehicle's history.
+- The selected vehicle is shown in the top bar and remembered across launches; a new vehicle becomes
+  the selected one.
+- Design system components: text field with per-field errors, empty state, loading state, confirm
+  dialog.
+
 ## [0.1.0] - 2026-11-08
 
 ### Added

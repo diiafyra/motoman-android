@@ -2,4 +2,64 @@
 <resources>
     <!-- The brand name stays Vietnamese in every language. -->
     <string name="app_name" translatable="false">Sổ Xe</string>
+
+    <!-- Common actions -->
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_back">Back</string>
+
+    <!-- Units -->
+    <string name="unit_km" translatable="false">km</string>
+    <string name="value_km">%1$s km</string>
+
+    <!-- Bottom navigation -->
+    <string name="tab_overview">Overview</string>
+    <string name="tab_fuel">Fuel</string>
+    <string name="tab_maintenance">Maintenance</string>
+    <string name="tab_nearby">Nearby</string>
+
+    <!-- Top bar -->
+    <string name="switch_vehicle">Switch vehicle, %1$s selected</string>
+
+    <!-- Shown on every tab while there is no vehicle -->
+    <string name="no_vehicle_title">Add your first vehicle</string>
+    <string name="no_vehicle_body">Every tab works on one vehicle. Add your motorbike or car to begin.</string>
+    <string name="placeholder_body">This screen is being built.</string>
+
+    <!-- Vehicle list -->
+    <string name="vehicles_title">Vehicles</string>
+    <string name="vehicles_empty_title">No vehicles yet</string>
+    <string name="vehicles_empty_body">Add your motorbike or car to start logging fill-ups and maintenance.</string>
+    <string name="vehicle_add">Add vehicle</string>
+    <string name="vehicle_summary">%1$s · %2$s · %3$s</string>
+    <string name="vehicle_edit_named">Edit %1$s</string>
+
+    <!-- Vehicle form -->
+    <string name="vehicle_new_title">New vehicle</string>
+    <string name="vehicle_edit_title">Edit vehicle</string>
+    <string name="vehicle_name">Name</string>
+    <string name="vehicle_type">Type</string>
+    <string name="vehicle_fuel_type">Fuel</string>
+    <string name="vehicle_initial_odometer">Odometer now</string>
+    <string name="vehicle_initial_odometer_help">Fill-ups and services cannot be below this reading.</string>
+    <string name="vehicle_delete_title">Delete %1$s?</string>
+    <string name="vehicle_delete_text">Its fill-ups and maintenance history are deleted too.</string>
+
+    <!-- Vehicle and fuel types -->
+    <string name="vehicle_type_motorbike">Motorbike</string>
+    <string name="vehicle_type_car">Car</string>
+    <string name="fuel_type_ron95" translatable="false">RON 95</string>
+    <string name="fuel_type_e5_ron92" translatable="false">E5 RON 92</string>
+    <string name="fuel_type_diesel">Diesel</string>
+    <string name="fuel_type_other">Other</string>
+
+    <!-- Form errors -->
+    <string name="error_name_blank">Enter a name</string>
+    <plurals name="error_name_too_long">
+        <item quantity="one">At most %1$d character</item>
+        <item quantity="other">At most %1$d characters</item>
+    </plurals>
+    <string name="error_odometer_missing">Enter the odometer reading</string>
+    <string name="error_odometer_too_large">At most %1$s km</string>
 </resources>

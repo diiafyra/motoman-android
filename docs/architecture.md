@@ -22,8 +22,10 @@ on purpose. `:core:data` does the same and exposes only what Hilt needs to bind.
 
 ```
 app/src/main/java/io/github/diiafyra/motoman/
-├── ui/designsystem/     theme and shared components
-├── ui/navigation/       type-safe routes, bottom bar
+├── ui/                  MotoManApp shell (top bar, bottom bar), AppViewModel
+├── ui/designsystem/     theme; MotoManTextField, EmptyState, LoadingState, ConfirmDialog
+├── ui/navigation/       type-safe routes, the four tabs, NavHost
+├── ui/format/           number formatting and labels for domain enums
 ├── feature/<name>/      Screen + ViewModel + UiState
 └── work/                reminder worker
 
@@ -31,11 +33,14 @@ core/domain/src/main/kotlin/io/github/diiafyra/motoman/core/domain/
 ├── model/               Vehicle, FuelEntry, MaintenanceItem, MaintenanceRecord
 ├── fuel/                fuel economy (full-tank method), fill-up validation
 ├── maintenance/         current odometer, maintenance status, recording a service
+├── vehicle/             vehicle form validation
+├── usecase/             ObserveSelectedVehicle
 ├── repository/          interfaces implemented by :core:data
 └── util/                Clock, IdGenerator
 
 core/data/src/main/kotlin/io/github/diiafyra/motoman/core/data/
 ├── database/            Room database, entities, mappers, DAOs
+├── datastore/           preferences (selected vehicle)
 ├── repository/          repository implementations
 ├── time/                SystemClock, UuidIdGenerator
 └── di/                  Hilt bindings from implementations to domain interfaces
@@ -67,6 +72,22 @@ months, whichever comes first:
 
 **Time and ids** come from the `Clock` and `IdGenerator` interfaces, so tests never depend on the real
 clock or on random UUIDs.
+
+## Screens and navigation
+
+One activity hosts `MotoManApp`: a top bar with the selected vehicle, a bottom bar with four tabs
+(Overview, Fuel, Maintenance, Nearby) and a `NavHost`. Routes are `@Serializable` classes, so
+arguments are typed (`VehicleEditRoute(vehicleId)`), never assembled as strings. Screens outside the
+tabs (vehicle list and form) draw their own top bar; the shell hides its bars there.
+
+Every tab works on one vehicle. `ObserveSelectedVehicle` combines the vehicle list with the id stored
+in DataStore and falls back to the oldest vehicle when nothing was chosen or the chosen one was
+deleted. With no vehicle at all, each tab shows the same "add your first vehicle" state.
+
+Each screen has an immutable `UiState` exposed as `StateFlow`; user actions are ViewModel functions.
+A screen that closes after an action (saving a form, choosing a vehicle) waits for an `isDone` flag
+in its state rather than closing right away, because closing cancels the ViewModel's scope and with it
+any write still in flight.
 
 ## Storage
 

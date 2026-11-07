@@ -13,3 +13,8 @@ All notable changes to this project are documented here. The format follows
 - ktlint, Android Lint and a GitHub Actions workflow that runs them with unit tests and a debug build
   on every pull request.
 - Auto Backup of app data, so logs survive a phone change before sync exists.
+- Domain models for vehicles, fill-ups and maintenance.
+- Fuel economy (L/100 km and cost per km) by the full-tank method, skipping segments with a missed
+  fill-up.
+- Fill-up validation: odometer must stay between the fill-ups before and after it.
+- Maintenance status by distance or time, whichever comes first.

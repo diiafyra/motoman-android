@@ -28,11 +28,40 @@ app/src/main/java/io/github/diiafyra/motoman/
 └── work/                reminder worker
 
 core/domain/src/main/kotlin/io/github/diiafyra/motoman/core/domain/
-└── model/, repository/, usecase/, util/
+├── model/               Vehicle, FuelEntry, MaintenanceItem, MaintenanceRecord
+├── fuel/                fuel economy (full-tank method), fill-up validation
+├── maintenance/         current odometer, maintenance status
+└── util/                Clock, IdGenerator
 
 core/data/src/main/kotlin/io/github/diiafyra/motoman/core/data/
 └── database/, network/, datastore/, repository/
 ```
+
+## Domain rules
+
+**Units.** Volume is stored in millilitres and money in dong, both as `Long`; odometer readings are
+whole kilometres as `Int`. Sums over hundreds of fill-ups stay exact, and values become decimals only
+when shown.
+
+**Fuel economy** uses the full-tank method. A segment runs from one full fill-up to the next; its fuel
+is every fill-up after the first, up to and including the second. A segment is dropped if any fill-up
+in it is marked "missed previous", because some fuel was never logged. With no valid segment the app
+asks for one more full tank instead of showing a wrong figure. The average is total fuel over total
+distance, weighted by distance.
+
+**Maintenance status.** The current odometer is the highest reading the app knows (initial reading,
+fill-ups, maintenance records). An item is due at its last service plus its interval, by distance or by
+months, whichever comes first:
+
+| Status | When |
+| --- | --- |
+| No baseline | No last-done value for any interval the item has |
+| Overdue | Past the due reading or the due date |
+| Due soon | Within the threshold (default 500 km or 14 days) |
+| Ok | Otherwise |
+
+**Time and ids** come from the `Clock` and `IdGenerator` interfaces, so tests never depend on the real
+clock or on random UUIDs.
 
 ## Rules that hold everywhere
 

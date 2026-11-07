@@ -43,15 +43,16 @@ Each library is here because a feature needs it.
 | Language | Kotlin, Coroutines |
 | UI | Jetpack Compose, Material 3, single activity |
 | Dependency injection | Hilt |
-| Build | Gradle version catalog, KSP |
+| Storage | Room (exported schemas, soft delete), tested with Robolectric |
+| Build | Gradle version catalog, KSP, JDK 21 |
 | Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
 
-Room, DataStore, Navigation Compose, Retrofit, OkHttp, WorkManager, Maps Compose and Firebase are added
+DataStore, Navigation Compose, Retrofit, OkHttp, WorkManager, Maps Compose and Firebase are added
 by the features that use them.
 
 ## Build
 
-Requirements: JDK 17 and the Android SDK with platform 37.
+Requirements: JDK 21 and the Android SDK with platform 37.
 
 ```sh
 ./gradlew assembleDebug          # build the debug APK
@@ -60,6 +61,14 @@ Requirements: JDK 17 and the Android SDK with platform 37.
 ```
 
 No secrets are needed yet. See [docs/setup.md](docs/setup.md) for local configuration.
+
+## Decisions
+
+Architecture decision records live in [docs/adr/](docs/adr/):
+
+1. [Three modules instead of one module per feature](docs/adr/0001-three-modules.md)
+2. [Money and volume stored as integers](docs/adr/0002-integer-money-and-volume.md)
+3. [Fuel economy by the full-tank method](docs/adr/0003-full-tank-fuel-economy.md)
 
 ## License
 

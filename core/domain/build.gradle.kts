@@ -5,10 +5,12 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
     explicitApi()
 }
 
 dependencies {
+    api(libs.kotlinx.coroutines.core)
+
     testImplementation(libs.junit)
 }

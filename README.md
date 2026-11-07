@@ -21,6 +21,9 @@ Available now:
   (oil, air filter, tyres, brake pads, and the yearly inspection for cars), sorted by urgency with an
   icon and label for each status. Marking an item done records the date, odometer, cost and note, and
   each item keeps its history.
+- Reminders: a daily check notifies once when an item becomes due soon and once more if it becomes
+  overdue, for every vehicle. Notification permission is asked for from the Maintenance tab, where it
+  makes sense, with a "Not now".
 - Fuel log grouped by month with monthly totals. Litres can be typed with a comma or a dot, and the
   price per litre is shown as you type. The odometer must lie between the fill-ups before and after.
 - Swipe a fill-up away to delete it, with undo. TalkBack users get the same action from the row.
@@ -38,13 +41,16 @@ Available now:
 | --- | --- | --- |
 | <img src="docs/screenshots/maintenance.png" width="240" alt="Maintenance items sorted by urgency, the first one overdue"> | <img src="docs/screenshots/maintenance-done.png" width="240" alt="Form to mark brake pads done, prefilled with today and the current odometer"> | <img src="docs/screenshots/maintenance-item.png" width="240" alt="Item form with intervals, last service and history"> |
 
+| Permission prompt | Reminder |
+| --- | --- |
+| <img src="docs/screenshots/notification-prompt.png" width="240" alt="Card in the Maintenance tab asking to allow reminders"> | <img src="docs/screenshots/reminder-notification.png" width="240" alt="Notification: Oil change is due soon, Wave Alpha, in 150 km"> |
+
 | Fill-up form | Fuel log | Undo |
 | --- | --- | --- |
 | <img src="docs/screenshots/fuel-form.png" width="240" alt="Fill-up form with the previous reading and the price per litre"> | <img src="docs/screenshots/fuel-log.png" width="240" alt="Fill-ups grouped under November 2026 with the month total"> | <img src="docs/screenshots/fuel-undo.png" width="240" alt="Snackbar offering to undo a deleted fill-up"> |
 
 Planned for v1.0:
 
-- Reminders for maintenance as notifications
 - Nearby fuel stations and garages on a map
 - Vietnamese and English
 
@@ -75,11 +81,12 @@ Each library is here because a feature needs it.
 | Navigation | Navigation Compose with type-safe routes |
 | Dependency injection | Hilt |
 | Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
+| Background work | WorkManager with Hilt workers |
 | Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories |
 | Build | Gradle version catalog, KSP, JDK 21 |
 | Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
 
-Retrofit, OkHttp, WorkManager, Maps Compose and Firebase are added
+Retrofit, OkHttp, Maps Compose and Firebase are added
 by the features that use them.
 
 ## Build

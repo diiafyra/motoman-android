@@ -23,6 +23,9 @@ All notable changes to this project are documented here. The format follows
   and delete items, and the service history of each item.
 - A new vehicle starts with the usual maintenance items for its type, with a note to check the
   owner's manual.
+- Maintenance reminders: a daily check notifies once when an item is due soon and once more if it
+  becomes overdue, for every vehicle. Android 13+ asks for notification permission from the
+  Maintenance tab.
 - Statistics: spending and fuel economy per month for six months, as bar charts with a table of the
   exact values.
 

@@ -9,7 +9,11 @@ All notable changes to this project are documented here. The format follows
 ### Added
 
 - Network layer: OkHttp with timeouts, retry for GET only, build-type logging, and failures as values.
-- Overpass client for fuel stations and garages around a point, used by the Nearby screen next.
+- Overpass client for fuel stations and garages around a point.
+- Nearby tab: location permission flow, places within 3 km sorted by distance with directions, a map
+  when a Maps key is configured, and a state for every outcome (no permission, no position, offline,
+  slow or failed service, no results, switched off).
+- Results cached in memory per 1 km cell for 30 minutes.
 
 ## [0.5.0] - 2026-11-08
 

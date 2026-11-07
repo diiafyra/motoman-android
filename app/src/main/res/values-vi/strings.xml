@@ -194,4 +194,32 @@
     <string name="settings_about">Thông tin</string>
     <string name="settings_version">Phiên bản</string>
     <string name="settings_privacy">Chính sách quyền riêng tư</string>
+
+    <string name="nearby_title">Gần tôi</string>
+    <string name="nearby_permission_title">Tìm trạm xăng gần bạn</string>
+    <string name="nearby_permission_body">Sổ Xe dùng vị trí gần đúng của bạn, chỉ khi bạn xem màn hình này, để liệt kê trạm xăng và garage trong 3 km. Vị trí của bạn không được lưu lại.</string>
+    <string name="nearby_permission_allow">Cho phép vị trí</string>
+    <string name="nearby_permission_settings_body">Quyền vị trí của Sổ Xe đang tắt. Bạn có thể bật lại trong phần cài đặt của ứng dụng.</string>
+    <string name="nearby_open_settings">Mở cài đặt</string>
+    <string name="nearby_locating">Đang tìm vị trí của bạn…</string>
+    <string name="nearby_loading">Đang tìm trạm xăng… dịch vụ bản đồ có thể mất đến một phút.</string>
+    <string name="nearby_location_unavailable_title">Không xác định được vị trí</string>
+    <string name="nearby_location_unavailable_body">Hãy bật dịch vụ vị trí trên điện thoại rồi thử lại.</string>
+    <string name="nearby_empty_title">Không có gì trong 3 km</string>
+    <string name="nearby_empty_body">Chưa có trạm xăng hay garage nào quanh bạn trên OpenStreetMap.</string>
+    <string name="nearby_disabled_title">Tính năng Gần tôi đang tạm dừng</string>
+    <string name="nearby_disabled_body">Tính năng này đang được tắt. Các phần còn lại của app vẫn dùng bình thường.</string>
+    <string name="nearby_error_no_connection">Không có kết nối mạng. Kiểm tra mạng rồi thử lại.</string>
+    <string name="nearby_error_timeout">Dịch vụ trả lời quá lâu. Hãy thử lại.</string>
+    <string name="nearby_error_server">Dịch vụ bản đồ đang bận hoặc gặp sự cố. Thử lại sau ít phút.</string>
+    <string name="nearby_error_invalid">Dịch vụ bản đồ trả về dữ liệu không đúng. Hãy thử lại sau.</string>
+    <string name="nearby_retry">Thử lại</string>
+    <string name="nearby_no_map">Bản này chưa có bản đồ. Các địa điểm được hiện dạng danh sách.</string>
+    <string name="nearby_directions">Chỉ đường</string>
+    <string name="nearby_directions_named">Chỉ đường đến %1$s</string>
+    <string name="nearby_distance_m">%1$s m</string>
+    <string name="nearby_distance_km">%1$s km</string>
+    <string name="nearby_unnamed_fuel">Trạm xăng</string>
+    <string name="nearby_unnamed_car_repair">Garage ô tô</string>
+    <string name="nearby_unnamed_motorbike_repair">Tiệm sửa xe máy</string>
 </resources>

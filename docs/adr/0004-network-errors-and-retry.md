@@ -21,7 +21,9 @@ harm when it is not idempotent.
 - A `RetryInterceptor` retries `GET` and `HEAD` only, at most twice, after a dropped connection, a
   timeout or a 429, 502, 503 or 504. It waits 1 s then 2 s, or the server's `Retry-After`, capped at
   5 s. Other methods are sent once, because repeating them could act twice on the server.
-- The call timeout (45 s) bounds a request including its retries, so no screen waits longer.
+- The call timeout (75 s) bounds a request including its retries, so no screen waits longer. It is
+  long on purpose: the shared Overpass server answered in 26 to 43 seconds for central Hanoi when
+  measured, so the screen says it may take a while instead of failing early.
 - Logging is `BASIC` in debug builds (request line and status) and off in release builds. Bodies are
   never logged.
 

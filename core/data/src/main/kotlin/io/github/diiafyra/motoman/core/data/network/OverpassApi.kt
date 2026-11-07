@@ -44,8 +44,10 @@ internal data class OverpassCenter(
 )
 
 /**
- * Fuel stations and car and motorbike garages within [radiusMeters]. `nwr` covers stations mapped as a
- * point or as a building outline; the server gives up after 25 seconds.
+ * Fuel stations and car and motorbike garages within [radiusMeters]. Nodes cover places mapped as a
+ * point and ways those mapped as a building outline; relations are left out because they make the
+ * query noticeably slower on the shared server and are rare for these places. The server gives up
+ * after 25 seconds of work.
  */
 internal fun nearbyPlacesQuery(
     center: GeoPoint,
@@ -53,9 +55,11 @@ internal fun nearbyPlacesQuery(
 ): String {
     // Always a dot as decimal separator, whatever the phone's language.
     val around = String.format(Locale.ROOT, "around:%d,%.6f,%.6f", radiusMeters, center.latitude, center.longitude)
+    val garages = "^(car_repair|motorcycle_repair)$"
     return "[out:json][timeout:25];(" +
-        "nwr[\"amenity\"=\"fuel\"]($around);" +
-        "nwr[\"shop\"=\"car_repair\"]($around);" +
-        "nwr[\"shop\"=\"motorcycle_repair\"]($around);" +
+        "node[\"amenity\"=\"fuel\"]($around);" +
+        "way[\"amenity\"=\"fuel\"]($around);" +
+        "node[\"shop\"~\"$garages\"]($around);" +
+        "way[\"shop\"~\"$garages\"]($around);" +
         ");out center tags;"
 }

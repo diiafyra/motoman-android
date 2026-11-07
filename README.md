@@ -27,6 +27,10 @@ Available now:
 - Fuel log grouped by month with monthly totals. Litres can be typed with a comma or a dot, and the
   price per litre is shown as you type. The odometer must lie between the fill-ups before and after.
 - Swipe a fill-up away to delete it, with undo. TalkBack users get the same action from the row.
+- Nearby: fuel stations and garages within 3 km from OpenStreetMap, nearest first, with directions in
+  your maps app. Location is asked for only on this screen, and every outcome has its own state:
+  no permission, refused for good, no position, offline, slow or busy server, no results, and
+  switched off remotely.
 - Form errors shown next to each field, and read out by TalkBack.
 - Vietnamese and English, chosen per app in Settings (or following the phone), on every supported
   Android version. Settings also turns reminders off and links the privacy policy.
@@ -43,6 +47,10 @@ Available now:
 | --- | --- | --- |
 | <img src="docs/screenshots/maintenance.png" width="240" alt="Maintenance items sorted by urgency, the first one overdue"> | <img src="docs/screenshots/maintenance-done.png" width="240" alt="Form to mark brake pads done, prefilled with today and the current odometer"> | <img src="docs/screenshots/maintenance-item.png" width="240" alt="Item form with intervals, last service and history"> |
 
+| Nearby permission | Nearby |
+| --- | --- |
+| <img src="docs/screenshots/nearby-permission.png" width="240" alt="Nearby asking for location permission and explaining why"> | <img src="docs/screenshots/nearby.png" width="240" alt="Fuel stations and garages sorted by distance"> |
+
 | Permission prompt | Reminder |
 | --- | --- |
 | <img src="docs/screenshots/notification-prompt.png" width="240" alt="Card in the Maintenance tab asking to allow reminders"> | <img src="docs/screenshots/reminder-notification.png" width="240" alt="Notification: Oil change is due soon, Wave Alpha, in 150 km"> |
@@ -57,7 +65,6 @@ Available now:
 
 Planned for v1.0:
 
-- Nearby fuel stations and garages on a map
 
 ## Architecture
 
@@ -86,6 +93,7 @@ Each library is here because a feature needs it.
 | Navigation | Navigation Compose with type-safe routes |
 | Dependency injection | Hilt |
 | Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
+| Maps and location | Maps Compose, Fused Location (approximate, only while the screen is open) |
 | Network | Retrofit, OkHttp, kotlinx.serialization; errors as values, retry for GET only; tested with MockWebServer |
 | Background work | WorkManager with Hilt workers |
 | Localisation | Per-app language with AppCompat, generated locale config |

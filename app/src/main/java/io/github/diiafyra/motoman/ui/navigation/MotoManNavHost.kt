@@ -14,6 +14,7 @@ import io.github.diiafyra.motoman.feature.fuel.FuelLogScreen
 import io.github.diiafyra.motoman.feature.maintenance.MaintenanceDoneScreen
 import io.github.diiafyra.motoman.feature.maintenance.MaintenanceItemEditScreen
 import io.github.diiafyra.motoman.feature.maintenance.MaintenanceScreen
+import io.github.diiafyra.motoman.feature.nearby.NearbyScreen
 import io.github.diiafyra.motoman.feature.overview.OverviewScreen
 import io.github.diiafyra.motoman.feature.placeholder.TabPlaceholder
 import io.github.diiafyra.motoman.feature.settings.SettingsScreen
@@ -72,7 +73,7 @@ fun MotoManNavHost(
                 )
             }
         }
-        composable<NearbyRoute> { Tab(TopLevelDestination.NEARBY, withVehicle) }
+        composable<NearbyRoute> { NearbyScreen() }
 
         composable<FuelEditRoute> {
             FuelEditScreen(onDone = navController::popBackStack)

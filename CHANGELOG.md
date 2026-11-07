@@ -14,6 +14,9 @@ All notable changes to this project are documented here. The format follows
   the selected one.
 - Design system components: text field with per-field errors, empty state, loading state, confirm
   dialog.
+- Fuel log: fill-ups grouped by month with monthly cost and volume, a form with date, odometer, litres,
+  amount paid, full-tank and missed-fill flags, and the price per litre shown while typing.
+- Deleting a fill-up by swiping, with undo; also offered as a TalkBack action.
 
 ## [0.1.0] - 2026-11-08
 

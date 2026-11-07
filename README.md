@@ -13,15 +13,21 @@ Available now:
 
 - Several vehicles, one selected at a time. The top bar shows the selected vehicle; tapping it opens
   the list to switch, add or edit.
+- Fuel log grouped by month with monthly totals. Litres can be typed with a comma or a dot, and the
+  price per litre is shown as you type. The odometer must lie between the fill-ups before and after.
+- Swipe a fill-up away to delete it, with undo. TalkBack users get the same action from the row.
 - Form errors shown next to each field, and read out by TalkBack.
 
 | No vehicle yet | Vehicle form | Vehicles |
 | --- | --- | --- |
 | <img src="docs/screenshots/no-vehicle.png" width="240" alt="Overview tab asking to add a first vehicle"> | <img src="docs/screenshots/vehicle-form-errors.png" width="240" alt="New vehicle form showing an error under each empty field"> | <img src="docs/screenshots/vehicle-list.png" width="240" alt="Vehicle list with the selected vehicle marked"> |
 
+| Fill-up form | Fuel log | Undo |
+| --- | --- | --- |
+| <img src="docs/screenshots/fuel-form.png" width="240" alt="Fill-up form with the previous reading and the price per litre"> | <img src="docs/screenshots/fuel-log.png" width="240" alt="Fill-ups grouped under November 2026 with the month total"> | <img src="docs/screenshots/fuel-undo.png" width="240" alt="Snackbar offering to undo a deleted fill-up"> |
+
 Planned for v1.0:
 
-- Fuel log with full-tank and missed-fill flags
 - Fuel economy (L/100 km), cost per km and monthly charts
 - Maintenance items due by distance or by time, with reminders
 - Nearby fuel stations and garages on a map

@@ -89,6 +89,18 @@ A screen that closes after an action (saving a form, choosing a vehicle) waits f
 in its state rather than closing right away, because closing cancels the ViewModel's scope and with it
 any write still in flight.
 
+### Fuel log
+
+The Fuel tab groups fill-ups by calendar month in the user's time zone. The form validates with the
+domain's `validateFuelEntry`, so the rules shown to the user are the ones the fuel economy calculation
+relies on. Litres are parsed straight to millilitres by `parseVolumeMl`, never through `Double`.
+
+The form asks for a date, not a time. A new fill-up today gets the current instant, another day gets
+noon local time, and an edit keeps its original instant while the date is unchanged; this keeps the
+order of fill-ups stable without making the user enter a time.
+
+Deleting is a soft delete. The list offers undo in a snackbar, which restores the row.
+
 ## Storage
 
 Room holds four tables: `vehicle`, `fuel_entry`, `maintenance_item` and `maintenance_record`.

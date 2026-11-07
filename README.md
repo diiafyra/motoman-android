@@ -9,9 +9,18 @@ only adds things on top, such as nearby fuel stations and garages.
 
 ## Features
 
+Available now:
+
+- Several vehicles, one selected at a time. The top bar shows the selected vehicle; tapping it opens
+  the list to switch, add or edit.
+- Form errors shown next to each field, and read out by TalkBack.
+
+| No vehicle yet | Vehicle form | Vehicles |
+| --- | --- | --- |
+| <img src="docs/screenshots/no-vehicle.png" width="240" alt="Overview tab asking to add a first vehicle"> | <img src="docs/screenshots/vehicle-form-errors.png" width="240" alt="New vehicle form showing an error under each empty field"> | <img src="docs/screenshots/vehicle-list.png" width="240" alt="Vehicle list with the selected vehicle marked"> |
+
 Planned for v1.0:
 
-- Several vehicles, one selected at a time
 - Fuel log with full-tank and missed-fill flags
 - Fuel economy (L/100 km), cost per km and monthly charts
 - Maintenance items due by distance or by time, with reminders
@@ -41,13 +50,15 @@ Each library is here because a feature needs it.
 | Area | Choice |
 | --- | --- |
 | Language | Kotlin, Coroutines |
-| UI | Jetpack Compose, Material 3, single activity |
+| UI | Jetpack Compose, Material 3, single activity, one `UiState` per screen via `StateFlow` |
+| Navigation | Navigation Compose with type-safe routes |
 | Dependency injection | Hilt |
-| Storage | Room (exported schemas, soft delete), tested with Robolectric |
+| Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
+| Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories |
 | Build | Gradle version catalog, KSP, JDK 21 |
 | Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
 
-DataStore, Navigation Compose, Retrofit, OkHttp, WorkManager, Maps Compose and Firebase are added
+Retrofit, OkHttp, WorkManager, Maps Compose and Firebase are added
 by the features that use them.
 
 ## Build

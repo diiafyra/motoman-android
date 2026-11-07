@@ -1,6 +1,10 @@
 package io.github.diiafyra.motoman.core.data.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import dagger.Binds
 import dagger.Module
@@ -9,6 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.diiafyra.motoman.core.data.database.MotoManDatabase
+import io.github.diiafyra.motoman.core.data.datastore.PreferencesRepositoryImpl
 import io.github.diiafyra.motoman.core.data.repository.FuelEntryRepositoryImpl
 import io.github.diiafyra.motoman.core.data.repository.MaintenanceRepositoryImpl
 import io.github.diiafyra.motoman.core.data.repository.VehicleRepositoryImpl
@@ -16,6 +21,7 @@ import io.github.diiafyra.motoman.core.data.time.SystemClock
 import io.github.diiafyra.motoman.core.data.time.UuidIdGenerator
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
 import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
+import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.repository.VehicleRepository
 import io.github.diiafyra.motoman.core.domain.util.Clock
 import io.github.diiafyra.motoman.core.domain.util.IdGenerator
@@ -35,6 +41,9 @@ internal abstract class DataModule {
     abstract fun maintenanceRepository(impl: MaintenanceRepositoryImpl): MaintenanceRepository
 
     @Binds
+    abstract fun preferencesRepository(impl: PreferencesRepositoryImpl): PreferencesRepository
+
+    @Binds
     abstract fun clock(impl: SystemClock): Clock
 
     @Binds
@@ -46,5 +55,12 @@ internal abstract class DataModule {
         fun database(
             @ApplicationContext context: Context,
         ): MotoManDatabase = Room.databaseBuilder(context, MotoManDatabase::class.java, MotoManDatabase.NAME).build()
+
+        @Provides
+        @Singleton
+        fun preferencesDataStore(
+            @ApplicationContext context: Context,
+        ): DataStore<Preferences> =
+            PreferenceDataStoreFactory.create { context.preferencesDataStoreFile("preferences") }
     }
 }

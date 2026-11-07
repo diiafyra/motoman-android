@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Android Studio (latest stable), which bundles JDK 17
+- Android Studio (latest stable), which bundles JDK 21
 - Android SDK platform 37
 
 ## First build

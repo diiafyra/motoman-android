@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-08
+
 ### Added
 
 - Bottom navigation with Overview, Fuel, Maintenance and Nearby tabs, using type-safe routes.
@@ -55,5 +57,6 @@ All notable changes to this project are documented here. The format follows
 
 - The project builds with JDK 21, which Robolectric needs for the Android 16 sandbox.
 
-[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...v0.5.0
 [0.1.0]: https://github.com/diiafyra/motoman-android/releases/tag/v0.1.0

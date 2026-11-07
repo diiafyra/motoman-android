@@ -17,9 +17,9 @@ android {
         minSdk = 26
         targetSdk = 37
         // versionCode = (major * 10000 + minor * 100 + patch) * 10 + b,
-        // b = rc number (1-8), b = 9 for the final release. 0.1.0 -> 1009.
-        versionCode = 1009
-        versionName = "0.1.0"
+        // b = rc number (1-8), b = 9 for the final release. 0.5.0 -> 5009.
+        versionCode = 5009
+        versionName = "0.5.0"
     }
 
     buildTypes {

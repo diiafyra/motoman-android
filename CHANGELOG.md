@@ -18,3 +18,11 @@ All notable changes to this project are documented here. The format follows
   fill-up.
 - Fill-up validation: odometer must stay between the fill-ups before and after it.
 - Maintenance status by distance or time, whichever comes first.
+- Room database with vehicles, fill-ups, maintenance items and records. Rows are soft-deleted, carry
+  client-generated UUIDs and timestamps for sync, and the schema is exported to `core/data/schemas/`
+  (database version 1).
+- Architecture decision records for the module split, integer units and the full-tank method.
+
+### Changed
+
+- The project builds with JDK 21, which Robolectric needs for the Android 16 sandbox.

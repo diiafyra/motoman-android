@@ -30,11 +30,16 @@ app/src/main/java/io/github/diiafyra/motoman/
 core/domain/src/main/kotlin/io/github/diiafyra/motoman/core/domain/
 ├── model/               Vehicle, FuelEntry, MaintenanceItem, MaintenanceRecord
 ├── fuel/                fuel economy (full-tank method), fill-up validation
-├── maintenance/         current odometer, maintenance status
+├── maintenance/         current odometer, maintenance status, recording a service
+├── repository/          interfaces implemented by :core:data
 └── util/                Clock, IdGenerator
 
 core/data/src/main/kotlin/io/github/diiafyra/motoman/core/data/
-└── database/, network/, datastore/, repository/
+├── database/            Room database, entities, mappers, DAOs
+├── repository/          repository implementations
+├── time/                SystemClock, UuidIdGenerator
+└── di/                  Hilt bindings from implementations to domain interfaces
+core/data/schemas/       exported Room schemas, one JSON file per version
 ```
 
 ## Domain rules
@@ -63,6 +68,33 @@ months, whichever comes first:
 **Time and ids** come from the `Clock` and `IdGenerator` interfaces, so tests never depend on the real
 clock or on random UUIDs.
 
+## Storage
+
+Room holds four tables: `vehicle`, `fuel_entry`, `maintenance_item` and `maintenance_record`.
+
+- Every row has a client-generated UUID `id` and `createdAt`, `updatedAt`, `deletedAt` in epoch
+  millis. The UI does not use them; they prepare for sync in v1.1, which will still add its own
+  bookkeeping (what has been uploaded).
+- Rows are soft-deleted: `deletedAt` is set and DAOs filter them out. Undo is one update, and sync
+  can upload deletions. Deleting a vehicle marks its fill-ups, items and records in the same
+  transaction.
+- A save never brings a deleted row back, and nothing can be saved or restored under a deleted
+  vehicle. A stale edit screen that saves after a deletion leaves the row deleted.
+- `updatedAt` never moves backwards, even when the device clock does, so that "newer wins" during
+  sync keeps meaning "edited later".
+- Saves use `@Upsert`, which updates an existing row in place. `INSERT OR REPLACE` would delete the
+  row first and cascade the delete to its children.
+- Dates are epoch days, instants are epoch millis; enums are stored by name.
+- An item's last-done values change only when a service is recorded: the record is stored and the
+  values move in one transaction, unless the item already has a later service. Saving an edited item
+  keeps them, so an edit form opened earlier cannot put an old value back.
+
+```
+vehicle 1──* fuel_entry
+vehicle 1──* maintenance_item 1──* maintenance_record
+vehicle 1──* maintenance_record
+```
+
 ## Rules that hold everywhere
 
 - **Room is the source of truth.** The UI reads `Flow`s from Room. Network results are written to Room,
@@ -73,5 +105,8 @@ clock or on random UUIDs.
 - **One immutable `UiState` per screen**, exposed as `StateFlow`. User actions are functions on the
   ViewModel.
 
-Decisions that are hard to reverse are recorded as ADRs in `docs/adr/`, starting with the module split
-and the storage of money and volume.
+## Decisions
+
+- [0001. Three modules instead of one module per feature](adr/0001-three-modules.md)
+- [0002. Money and volume stored as integers](adr/0002-integer-money-and-volume.md)
+- [0003. Fuel economy by the full-tank method](adr/0003-full-tank-fuel-economy.md)

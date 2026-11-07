@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Network layer: OkHttp with timeouts, retry for GET only, build-type logging, and failures as values.
+- Overpass client for fuel stations and garages around a point, used by the Nearby screen next.
+
 ## [0.5.0] - 2026-11-08
 
 ### Added

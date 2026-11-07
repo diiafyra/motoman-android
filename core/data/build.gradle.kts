@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -13,6 +14,11 @@ android {
 
     defaultConfig {
         minSdk = 26
+    }
+
+    buildFeatures {
+        // BuildConfig.DEBUG decides how much the network layer logs.
+        buildConfig = true
     }
 
     compileOptions {
@@ -57,6 +63,11 @@ dependencies {
     api(project(":core:domain"))
 
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
@@ -70,4 +81,5 @@ dependencies {
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.ext.junit)
     testImplementation(libs.room.testing)
+    testImplementation(libs.okhttp.mockwebserver)
 }

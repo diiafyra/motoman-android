@@ -86,13 +86,14 @@ Each library is here because a feature needs it.
 | Navigation | Navigation Compose with type-safe routes |
 | Dependency injection | Hilt |
 | Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
+| Network | Retrofit, OkHttp, kotlinx.serialization; errors as values, retry for GET only; tested with MockWebServer |
 | Background work | WorkManager with Hilt workers |
 | Localisation | Per-app language with AppCompat, generated locale config |
 | Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories; Compose UI tests on Robolectric with Hilt |
 | Build | Gradle version catalog, KSP, JDK 21 |
 | Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
 
-Retrofit, OkHttp, Maps Compose and Firebase are added
+Maps Compose and Firebase are added
 by the features that use them.
 
 ## Build
@@ -114,6 +115,7 @@ Architecture decision records live in [docs/adr/](docs/adr/):
 1. [Three modules instead of one module per feature](docs/adr/0001-three-modules.md)
 2. [Money and volume stored as integers](docs/adr/0002-integer-money-and-volume.md)
 3. [Fuel economy by the full-tank method](docs/adr/0003-full-tank-fuel-economy.md)
+4. [Network errors as values, retry only for idempotent requests](docs/adr/0004-network-errors-and-retry.md)
 
 ## License
 

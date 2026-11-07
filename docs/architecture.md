@@ -41,7 +41,8 @@ core/domain/src/main/kotlin/io/github/diiafyra/motoman/core/domain/
 
 core/data/src/main/kotlin/io/github/diiafyra/motoman/core/data/
 ├── database/            Room database, entities, mappers, DAOs
-├── datastore/           preferences (selected vehicle)
+├── datastore/           preferences (selected vehicle, reminders)
+├── network/             Overpass API, retry interceptor, error mapping
 ├── repository/          repository implementations
 ├── time/                SystemClock, UuidIdGenerator
 └── di/                  Hilt bindings from implementations to domain interfaces
@@ -110,6 +111,14 @@ live in the domain, the names come from string resources in the app's language a
 tab lists items with `rankByUrgency` at the current odometer. Marking an item done creates a record
 through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
 touches its baseline.
+
+### Network
+
+Retrofit with kotlinx.serialization talks to Overpass; OkHttp adds a `User-Agent` that identifies the
+app, timeouts, retry for `GET` and `HEAD` only, and logging that depends on the build type. Every call
+goes through `safeCall`, so repositories return `AppResult<T>` and the screen chooses a message from
+`DataError`. Results of the nearby query are short-lived: they are returned to the UI directly and never
+written to Room. See [ADR 4](adr/0004-network-errors-and-retry.md).
 
 ### Settings and language
 
@@ -193,5 +202,6 @@ vehicle 1──* maintenance_record
 - [0001. Three modules instead of one module per feature](adr/0001-three-modules.md)
 - [0002. Money and volume stored as integers](adr/0002-integer-money-and-volume.md)
 - [0003. Fuel economy by the full-tank method](adr/0003-full-tank-fuel-economy.md)
+- [0004. Network errors as values, retry only for idempotent requests](adr/0004-network-errors-and-retry.md)
 
 What the app stores and the permissions it asks for are listed in [privacy.md](privacy.md).

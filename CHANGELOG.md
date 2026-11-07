@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-08
+
 ### Added
 
 - Project skeleton with `:app`, `:core:domain` and `:core:data` modules.
@@ -26,3 +28,6 @@ All notable changes to this project are documented here. The format follows
 ### Changed
 
 - The project builds with JDK 21, which Robolectric needs for the Android 16 sandbox.
+
+[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/diiafyra/motoman-android/releases/tag/v0.1.0

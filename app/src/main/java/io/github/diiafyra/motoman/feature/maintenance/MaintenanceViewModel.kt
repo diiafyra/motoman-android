@@ -8,6 +8,7 @@ import io.github.diiafyra.motoman.core.domain.maintenance.currentOdometerKm
 import io.github.diiafyra.motoman.core.domain.maintenance.rankByUrgency
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
 import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
+import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.usecase.ObserveSelectedVehicle
 import io.github.diiafyra.motoman.core.domain.util.Clock
 import io.github.diiafyra.motoman.feature.vehicle.STOP_TIMEOUT_MS
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed interface MaintenanceUiState {
@@ -28,6 +30,8 @@ sealed interface MaintenanceUiState {
         val odometerKm: Int,
         /** Most urgent first. */
         val items: List<ItemStatus>,
+        /** Reminders are on and the user has not said "not now"; the screen still checks the permission. */
+        val mayAskForNotifications: Boolean = false,
     ) : MaintenanceUiState
 }
 
@@ -38,6 +42,7 @@ class MaintenanceViewModel
         observeSelectedVehicle: ObserveSelectedVehicle,
         fuel: FuelEntryRepository,
         maintenance: MaintenanceRepository,
+        private val preferences: PreferencesRepository,
         clock: Clock,
     ) : ViewModel() {
         @OptIn(ExperimentalCoroutinesApi::class)
@@ -49,9 +54,20 @@ class MaintenanceViewModel
                         fuel.observeEntries(vehicle.id),
                         maintenance.observeItems(vehicle.id),
                         maintenance.observeRecords(vehicle.id),
-                    ) { entries, items, records ->
+                        preferences.observeRemindersEnabled(),
+                        preferences.observeNotificationPromptDismissed(),
+                    ) { entries, items, records, remindersOn, dismissed ->
                         val odometer = currentOdometerKm(vehicle, entries, records)
-                        MaintenanceUiState.Ready(vehicle.id, odometer, rankByUrgency(items, odometer, clock.today()))
+                        MaintenanceUiState.Ready(
+                            vehicleId = vehicle.id,
+                            odometerKm = odometer,
+                            items = rankByUrgency(items, odometer, clock.today()),
+                            mayAskForNotifications = remindersOn && !dismissed && items.isNotEmpty(),
+                        )
                     }
                 }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), MaintenanceUiState.Loading)
+
+        fun onNotificationPromptDismiss() {
+            viewModelScope.launch { preferences.setNotificationPromptDismissed() }
+        }
     }

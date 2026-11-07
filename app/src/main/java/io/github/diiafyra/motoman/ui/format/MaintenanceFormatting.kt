@@ -1,11 +1,12 @@
 package io.github.diiafyra.motoman.ui.format
 
+import android.content.res.Resources
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import io.github.diiafyra.motoman.R
-import io.github.diiafyra.motoman.core.domain.maintenance.DuePoint
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceStatus
+import java.text.NumberFormat
 import kotlin.math.abs
 
 @Composable
@@ -19,12 +20,18 @@ fun maintenanceStatusLabel(status: MaintenanceStatus): String =
         },
     )
 
+/** See [dueText]. Recomposes when the language changes. */
+@Composable
+fun maintenanceDueText(status: MaintenanceStatus): String? = dueText(LocalResources.current, status)
+
 /**
  * How far off the due point is, on the side that comes first: "in 300 km", "5 days over", "today".
- * Null when there is no baseline.
+ * Null when there is no baseline. Plain function so that notifications can use it outside Compose.
  */
-@Composable
-fun maintenanceDueText(status: MaintenanceStatus): String? {
+fun dueText(
+    resources: Resources,
+    status: MaintenanceStatus,
+): String? {
     val due =
         when (status) {
             is MaintenanceStatus.Overdue -> status.due
@@ -32,14 +39,6 @@ fun maintenanceDueText(status: MaintenanceStatus): String? {
             is MaintenanceStatus.Ok -> status.due
             MaintenanceStatus.NoBaseline -> return null
         }
-    return dueText(due, isOverdue = status is MaintenanceStatus.Overdue)
-}
-
-@Composable
-private fun dueText(
-    due: DuePoint,
-    isOverdue: Boolean,
-): String {
     val km = due.remainingKm
     val days = due.remainingDays
     // When overdue, describe the side that is past due; otherwise the side with less left.
@@ -47,23 +46,20 @@ private fun dueText(
         when {
             km == null -> true
             days == null -> false
-            isOverdue -> days < 0 && (km >= 0 || days * KM_PER_DAY_ESTIMATE < km)
+            status is MaintenanceStatus.Overdue -> days < 0 && (km >= 0 || days * KM_PER_DAY_ESTIMATE < km)
             else -> days * KM_PER_DAY_ESTIMATE < km
         }
     return if (useDays) {
-        val d = requireNotNull(days)
+        val d = requireNotNull(days).toInt()
         when {
-            d == 0L -> stringResource(R.string.due_today)
-            d > 0 -> pluralStringResource(R.plurals.due_in_days, d.toInt(), d.toInt())
-            else -> pluralStringResource(R.plurals.due_over_days, abs(d).toInt(), abs(d).toInt())
+            d == 0 -> resources.getString(R.string.due_today)
+            d > 0 -> resources.getQuantityString(R.plurals.due_in_days, d, d)
+            else -> resources.getQuantityString(R.plurals.due_over_days, abs(d), abs(d))
         }
     } else {
         val k = requireNotNull(km)
-        if (k >= 0) {
-            stringResource(R.string.due_in_km, formatInteger(k.toLong()))
-        } else {
-            stringResource(R.string.due_over_km, formatInteger(abs(k).toLong()))
-        }
+        val formatted = NumberFormat.getIntegerInstance(resources.configuration.locales[0]).format(abs(k).toLong())
+        resources.getString(if (k >= 0) R.string.due_in_km else R.string.due_over_km, formatted)
     }
 }
 

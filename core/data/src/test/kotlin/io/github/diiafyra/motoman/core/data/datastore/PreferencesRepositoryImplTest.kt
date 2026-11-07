@@ -28,4 +28,27 @@ class PreferencesRepositoryImplTest {
 
             assertEquals("v2", repository.observeSelectedVehicleId().first())
         }
+
+    @Test
+    fun remindersAreOnByDefaultAndSentKeysAreReplaced() =
+        runTest {
+            val repository =
+                PreferencesRepositoryImpl(
+                    PreferenceDataStoreFactory.create(
+                        scope = backgroundScope,
+                    ) { File(folder.root, "r.preferences_pb") },
+                )
+            assertEquals(true, repository.observeRemindersEnabled().first())
+            assertEquals(false, repository.observeNotificationPromptDismissed().first())
+            assertEquals(emptySet<String>(), repository.sentReminderKeys())
+
+            repository.setRemindersEnabled(false)
+            repository.setSentReminderKeys(setOf("a", "b"))
+            repository.setSentReminderKeys(setOf("c"))
+            repository.setNotificationPromptDismissed()
+
+            assertEquals(false, repository.observeRemindersEnabled().first())
+            assertEquals(setOf("c"), repository.sentReminderKeys())
+            assertEquals(true, repository.observeNotificationPromptDismissed().first())
+        }
 }

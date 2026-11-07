@@ -173,4 +173,14 @@
         <item quantity="other">Tối đa %1$d tháng</item>
     </plurals>
     <string name="error_no_interval">Đặt số km, thời gian, hoặc cả hai</string>
+
+    <string name="reminder_channel_name">Nhắc lịch bảo dưỡng</string>
+    <string name="reminder_channel_description">Khi một hạng mục bảo dưỡng sắp đến hạn hoặc đã quá hạn</string>
+    <string name="reminder_title_overdue">%1$s đã quá hạn</string>
+    <string name="reminder_title_due_soon">%1$s sắp đến hạn</string>
+    <string name="reminder_text">%1$s · %2$s</string>
+    <string name="notification_prompt_title">Nhận nhắc lịch bảo dưỡng</string>
+    <string name="notification_prompt_body">Sổ Xe sẽ báo một lần khi hạng mục sắp đến hạn và một lần nữa nếu đã quá hạn.</string>
+    <string name="notification_prompt_allow">Cho phép</string>
+    <string name="notification_prompt_not_now">Để sau</string>
 </resources>

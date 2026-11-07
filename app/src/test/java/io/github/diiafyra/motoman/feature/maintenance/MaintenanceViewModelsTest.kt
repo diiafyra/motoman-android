@@ -52,6 +52,7 @@ class MaintenanceViewModelsTest {
                     ObserveSelectedVehicle(vehicles, FakePreferencesRepository()),
                     fuel,
                     maintenance,
+                    FakePreferencesRepository(),
                     clock,
                 )
 
@@ -62,6 +63,34 @@ class MaintenanceViewModelsTest {
                 assertEquals(listOf("oil", "tyres"), state.items.map { it.item.id })
                 assertTrue(state.items[0].status is MaintenanceStatus.DueSoon)
                 assertEquals(MaintenanceStatus.NoBaseline, state.items[1].status)
+                assertTrue(state.mayAskForNotifications)
+            }
+        }
+
+    @Test
+    fun `the notification prompt goes away after not now, or with reminders off`() =
+        runTest {
+            val preferences = FakePreferencesRepository()
+            val viewModel =
+                MaintenanceViewModel(
+                    ObserveSelectedVehicle(vehicles, preferences),
+                    fuel,
+                    maintenance,
+                    preferences,
+                    clock,
+                )
+
+            viewModel.uiState.test {
+                var state = awaitItem()
+                while (state !is MaintenanceUiState.Ready) state = awaitItem()
+                assertTrue(state.mayAskForNotifications)
+
+                viewModel.onNotificationPromptDismiss()
+                assertFalse((expectMostRecentItem() as MaintenanceUiState.Ready).mayAskForNotifications)
+
+                preferences.promptDismissed.value = false
+                preferences.remindersEnabled.value = false
+                assertFalse((expectMostRecentItem() as MaintenanceUiState.Ready).mayAskForNotifications)
             }
         }
 

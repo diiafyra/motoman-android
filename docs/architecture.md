@@ -27,7 +27,8 @@ app/src/main/java/io/github/diiafyra/motoman/
 ├── ui/navigation/       type-safe routes, the four tabs, NavHost
 ├── ui/format/           number formatting and labels for domain enums
 ├── feature/<name>/      Screen + ViewModel + UiState
-└── work/                reminder worker
+├── di/                  app-level Hilt bindings (template names, notifier)
+└── work/                ReminderWorker, ReminderChecker, notifications
 
 core/domain/src/main/kotlin/io/github/diiafyra/motoman/core/domain/
 ├── model/               Vehicle, FuelEntry, MaintenanceItem, MaintenanceRecord
@@ -110,6 +111,18 @@ tab lists items with `rankByUrgency` at the current odometer. Marking an item do
 through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
 touches its baseline.
 
+### Reminders
+
+`ReminderWorker` is a periodic WorkManager job, first run at the next 9:00 and then daily; it only
+calls `ReminderChecker`, which holds the logic and is tested with fakes. The checker looks at every
+vehicle, builds reminders for overdue and due-soon items, and uses `selectReminders` so each item is
+notified once per due point: once when it becomes due soon, once more if it becomes overdue, and again
+only after it has been done and comes due anew. The keys already notified live in DataStore. Without
+notification permission nothing is marked as sent, so the reminders appear once it is granted.
+
+`MotoManApplication` provides WorkManager's configuration with Hilt's worker factory, which is why the
+default WorkManager initializer is removed from the manifest.
+
 ### Fuel log
 
 The Fuel tab groups fill-ups by calendar month in the user's time zone. The form validates with the
@@ -164,3 +177,5 @@ vehicle 1──* maintenance_record
 - [0001. Three modules instead of one module per feature](adr/0001-three-modules.md)
 - [0002. Money and volume stored as integers](adr/0002-integer-money-and-volume.md)
 - [0003. Fuel economy by the full-tank method](adr/0003-full-tank-fuel-economy.md)
+
+What the app stores and the permissions it asks for are listed in [privacy.md](privacy.md).

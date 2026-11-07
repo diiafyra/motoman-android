@@ -1,6 +1,7 @@
 package io.github.diiafyra.motoman.di
 
 import android.content.Context
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import io.github.diiafyra.motoman.R
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceTemplate
 import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
+import io.github.diiafyra.motoman.work.AndroidReminderNotifier
+import io.github.diiafyra.motoman.work.ReminderNotifier
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,4 +32,11 @@ object AppModule {
                 },
             )
         }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AppBindings {
+    @Binds
+    abstract fun reminderNotifier(impl: AndroidReminderNotifier): ReminderNotifier
 }

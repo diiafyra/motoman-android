@@ -50,7 +50,7 @@ fun MaintenanceScreen(
     viewModel: MaintenanceViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    MaintenanceContent(state, onAddItem, onEditItem, onMarkDone)
+    MaintenanceContent(state, onAddItem, onEditItem, onMarkDone, viewModel::onNotificationPromptDismiss)
 }
 
 @Composable
@@ -59,6 +59,7 @@ internal fun MaintenanceContent(
     onAddItem: (String) -> Unit,
     onEditItem: (String, String) -> Unit,
     onMarkDone: (String, String) -> Unit,
+    onNotificationPromptDismiss: () -> Unit = {},
 ) {
     val ready =
         when (state) {
@@ -104,6 +105,11 @@ internal fun MaintenanceContent(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+                NotificationPrompt(
+                    mayAsk = ready.mayAskForNotifications,
+                    onDismiss = onNotificationPromptDismiss,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                )
             }
             items(ready.items, key = { it.item.id }) { itemStatus ->
                 ItemRow(

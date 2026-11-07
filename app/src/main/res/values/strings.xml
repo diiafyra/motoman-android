@@ -205,4 +205,15 @@
         <item quantity="other">At most %1$d months</item>
     </plurals>
     <string name="error_no_interval">Set a distance, a time, or both</string>
+
+    <!-- Reminders -->
+    <string name="reminder_channel_name">Maintenance reminders</string>
+    <string name="reminder_channel_description">When a maintenance item is due soon or overdue</string>
+    <string name="reminder_title_overdue">%1$s is overdue</string>
+    <string name="reminder_title_due_soon">%1$s is due soon</string>
+    <string name="reminder_text">%1$s · %2$s</string>
+    <string name="notification_prompt_title">Get maintenance reminders</string>
+    <string name="notification_prompt_body">Sổ Xe can notify you once when an item is due soon and again if it becomes overdue.</string>
+    <string name="notification_prompt_allow">Allow</string>
+    <string name="notification_prompt_not_now">Not now</string>
 </resources>

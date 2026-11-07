@@ -67,9 +67,10 @@ internal fun createOkHttpClient(
     OkHttpClient
         .Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
+        // The shared Overpass server can take 30 seconds or more when busy.
+        .readTimeout(45, TimeUnit.SECONDS)
         // Bounds everything, retries included, so a screen never waits more than this.
-        .callTimeout(45, TimeUnit.SECONDS)
+        .callTimeout(75, TimeUnit.SECONDS)
         // Overpass asks clients to identify themselves.
         .addInterceptor { chain ->
             chain.proceed(

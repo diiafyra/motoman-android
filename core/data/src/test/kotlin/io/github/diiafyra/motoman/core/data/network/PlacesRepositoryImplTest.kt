@@ -95,7 +95,9 @@ class PlacesRepositoryImplTest {
             assertEquals("GET", request.method)
             val query = requireNotNull(request.url.queryParameter("data"))
             assertTrue(query, query.contains("around:3000,21.028500,105.854200"))
-            assertTrue(query.contains("\"amenity\"=\"fuel\""))
+            assertTrue(query.contains("node[\"amenity\"=\"fuel\"]"))
+            assertTrue(query.contains("way[\"shop\"~\"^(car_repair|motorcycle_repair)$\"]"))
+            assertTrue("relations are left out", !query.contains("nwr") && !query.contains("rel["))
             assertTrue(requireNotNull(request.headers["User-Agent"]).startsWith("SoXe-Android"))
         }
 

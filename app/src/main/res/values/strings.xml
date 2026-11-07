@@ -62,4 +62,48 @@
     </plurals>
     <string name="error_odometer_missing">Enter the odometer reading</string>
     <string name="error_odometer_too_large">At most %1$s km</string>
+
+    <!-- Fuel log -->
+    <string name="fuel_log_add">Log fill-up</string>
+    <string name="fuel_log_empty_title">No fill-ups yet</string>
+    <string name="fuel_log_empty_body">Log every fill-up. Tick “Full tank” when you fill to the top, so fuel economy can be measured.</string>
+    <string name="fuel_month_total">%1$s · %2$s L</string>
+    <string name="fuel_entry_amount">%1$s L · %2$s</string>
+    <string name="fuel_entry_full">Full tank</string>
+    <string name="fuel_entry_partial">Partial</string>
+    <string name="fuel_entry_missed">Missed one before</string>
+    <string name="fuel_entry_deleted">Fill-up deleted</string>
+    <string name="action_undo">Undo</string>
+    <string name="value_vnd">%1$s ₫</string>
+
+    <!-- Fill-up form -->
+    <string name="fuel_new_title">New fill-up</string>
+    <string name="fuel_edit_title">Edit fill-up</string>
+    <string name="fuel_date">Date</string>
+    <string name="fuel_choose_date">Choose date</string>
+    <string name="fuel_odometer">Odometer</string>
+    <string name="fuel_previous_odometer">Previous reading: %1$s km</string>
+    <string name="fuel_volume">Volume</string>
+    <string name="unit_liter" translatable="false">L</string>
+    <string name="fuel_cost">Total paid</string>
+    <string name="unit_vnd" translatable="false">₫</string>
+    <string name="fuel_price_per_liter">%1$s ₫ per litre</string>
+    <string name="fuel_full_tank">Full tank</string>
+    <string name="fuel_full_tank_help">Filled to the top. Needed to measure fuel economy.</string>
+    <string name="fuel_missed_previous">I did not log a fill-up before this one</string>
+    <string name="fuel_missed_previous_help">The fuel economy across that gap is skipped instead of shown wrong.</string>
+    <string name="fuel_note">Note (optional)</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Fill-up errors -->
+    <string name="error_date_future">The date cannot be in the future</string>
+    <string name="error_odometer_below_initial">At least %1$s km, the reading when the vehicle was added</string>
+    <string name="error_odometer_below_previous">At least %1$s km, the reading of the fill-up before</string>
+    <string name="error_odometer_above_next">At most %1$s km, the reading of the fill-up after</string>
+    <string name="error_volume_missing">Enter the litres</string>
+    <string name="error_volume_unreadable">Use a number like 4.25</string>
+    <string name="error_volume_not_positive">Must be more than 0</string>
+    <string name="error_volume_too_large">At most %1$s L</string>
+    <string name="error_cost_missing">Enter the amount paid</string>
+    <string name="error_cost_not_positive">Must be more than 0</string>
 </resources>

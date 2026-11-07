@@ -46,4 +46,43 @@
     </plurals>
     <string name="error_odometer_missing">Nhập số km trên đồng hồ</string>
     <string name="error_odometer_too_large">Tối đa %1$s km</string>
+
+    <string name="fuel_log_add">Ghi đổ xăng</string>
+    <string name="fuel_log_empty_title">Chưa có lần đổ xăng nào</string>
+    <string name="fuel_log_empty_body">Ghi lại mỗi lần đổ xăng. Chọn “Đầy bình” khi đổ đầy để app tính được mức tiêu hao.</string>
+    <string name="fuel_month_total">%1$s · %2$s L</string>
+    <string name="fuel_entry_amount">%1$s L · %2$s</string>
+    <string name="fuel_entry_full">Đầy bình</string>
+    <string name="fuel_entry_partial">Không đầy</string>
+    <string name="fuel_entry_missed">Bỏ lỡ lần trước</string>
+    <string name="fuel_entry_deleted">Đã xoá lần đổ xăng</string>
+    <string name="action_undo">Hoàn tác</string>
+    <string name="value_vnd">%1$s ₫</string>
+
+    <string name="fuel_new_title">Lần đổ xăng mới</string>
+    <string name="fuel_edit_title">Sửa lần đổ xăng</string>
+    <string name="fuel_date">Ngày</string>
+    <string name="fuel_choose_date">Chọn ngày</string>
+    <string name="fuel_odometer">Số km</string>
+    <string name="fuel_previous_odometer">Lần trước: %1$s km</string>
+    <string name="fuel_volume">Số lít</string>
+    <string name="fuel_cost">Số tiền</string>
+    <string name="fuel_price_per_liter">%1$s ₫ mỗi lít</string>
+    <string name="fuel_full_tank">Đầy bình</string>
+    <string name="fuel_full_tank_help">Đổ đầy tới miệng bình. Cần để tính mức tiêu hao.</string>
+    <string name="fuel_missed_previous">Tôi chưa ghi một lần đổ trước lần này</string>
+    <string name="fuel_missed_previous_help">Mức tiêu hao của đoạn bị thiếu sẽ được bỏ qua thay vì hiện sai.</string>
+    <string name="fuel_note">Ghi chú (không bắt buộc)</string>
+    <string name="action_ok">OK</string>
+
+    <string name="error_date_future">Ngày không được ở tương lai</string>
+    <string name="error_odometer_below_initial">Tối thiểu %1$s km, số km khi thêm xe</string>
+    <string name="error_odometer_below_previous">Tối thiểu %1$s km, số km của lần đổ trước</string>
+    <string name="error_odometer_above_next">Tối đa %1$s km, số km của lần đổ sau</string>
+    <string name="error_volume_missing">Nhập số lít</string>
+    <string name="error_volume_unreadable">Nhập số dạng 4,25</string>
+    <string name="error_volume_not_positive">Phải lớn hơn 0</string>
+    <string name="error_volume_too_large">Tối đa %1$s L</string>
+    <string name="error_cost_missing">Nhập số tiền đã trả</string>
+    <string name="error_cost_not_positive">Phải lớn hơn 0</string>
 </resources>

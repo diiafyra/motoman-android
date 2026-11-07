@@ -11,6 +11,8 @@ internal class SystemClock
     constructor() : Clock {
         override fun now(): Instant = Instant.now()
 
-        // Read the zone on every call: the user may travel or change it while the app runs.
-        override fun today(): LocalDate = LocalDate.now(ZoneId.systemDefault())
+        override fun today(): LocalDate = LocalDate.now(zone())
+
+        // Read on every call: the user may travel or change the zone while the app runs.
+        override fun zone(): ZoneId = ZoneId.systemDefault()
     }

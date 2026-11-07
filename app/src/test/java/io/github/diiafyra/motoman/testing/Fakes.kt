@@ -1,10 +1,14 @@
 package io.github.diiafyra.motoman.testing
 
+import io.github.diiafyra.motoman.core.domain.maintenance.withRecord
 import io.github.diiafyra.motoman.core.domain.model.FuelEntry
 import io.github.diiafyra.motoman.core.domain.model.FuelType
+import io.github.diiafyra.motoman.core.domain.model.MaintenanceItem
+import io.github.diiafyra.motoman.core.domain.model.MaintenanceRecord
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.core.domain.model.VehicleType
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
+import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
 import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.repository.VehicleRepository
 import io.github.diiafyra.motoman.core.domain.util.Clock
@@ -122,3 +126,58 @@ fun testFuelEntry(
     vehicleId: String = "v1",
     isFullTank: Boolean = true,
 ) = FuelEntry(id, vehicleId, filledAt, odometerKm, volumeMl, totalCostVnd, isFullTank, missedPrevious = false)
+
+class FakeMaintenanceRepository(
+    vararg initial: MaintenanceItem,
+) : MaintenanceRepository {
+    val items = MutableStateFlow(initial.toList())
+    val records = MutableStateFlow<List<MaintenanceRecord>>(emptyList())
+
+    override fun observeItems(vehicleId: String): Flow<List<MaintenanceItem>> =
+        items.map { all -> all.filter { it.vehicleId == vehicleId } }
+
+    override fun observeRecords(vehicleId: String): Flow<List<MaintenanceRecord>> =
+        records.map { all -> all.filter { it.vehicleId == vehicleId }.sortedByDescending { it.doneDate } }
+
+    override suspend fun saveItem(item: MaintenanceItem) = saveItems(listOf(item))
+
+    override suspend fun saveItems(items: List<MaintenanceItem>) =
+        this.items.update { all ->
+            items.fold(all) { acc, item ->
+                val stored = acc.firstOrNull { it.id == item.id }
+                if (stored == null) {
+                    acc + item
+                } else {
+                    acc.map {
+                        if (it.id ==
+                            item.id
+                        ) {
+                            item.copy(lastDoneKm = stored.lastDoneKm, lastDoneDate = stored.lastDoneDate)
+                        } else {
+                            it
+                        }
+                    }
+                }
+            }
+        }
+
+    override suspend fun deleteItem(id: String) {
+        items.update { all -> all.filterNot { it.id == id } }
+        records.update { all -> all.filterNot { it.itemId == id } }
+    }
+
+    override suspend fun recordDone(record: MaintenanceRecord) {
+        records.update { it + record }
+        items.update { all -> all.map { if (it.id == record.itemId) it.withRecord(record) else it } }
+    }
+}
+
+fun testItem(
+    id: String,
+    name: String = id,
+    intervalKm: Int? = 4_000,
+    intervalMonths: Int? = null,
+    lastDoneKm: Int? = null,
+    lastDoneDate: LocalDate? = null,
+    vehicleId: String = "v1",
+) = MaintenanceItem(id, vehicleId, name, intervalKm, intervalMonths, lastDoneKm, lastDoneDate)

@@ -11,7 +11,9 @@ import androidx.navigation.compose.composable
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.feature.fuel.FuelEditScreen
 import io.github.diiafyra.motoman.feature.fuel.FuelLogScreen
+import io.github.diiafyra.motoman.feature.overview.OverviewScreen
 import io.github.diiafyra.motoman.feature.placeholder.TabPlaceholder
+import io.github.diiafyra.motoman.feature.stats.StatsScreen
 import io.github.diiafyra.motoman.feature.vehicle.VehicleEditScreen
 import io.github.diiafyra.motoman.feature.vehicle.VehicleListScreen
 
@@ -30,7 +32,15 @@ fun MotoManNavHost(
         startDestination = OverviewRoute,
         modifier = Modifier.padding(contentPadding),
     ) {
-        composable<OverviewRoute> { Tab(TopLevelDestination.OVERVIEW, withVehicle) }
+        composable<OverviewRoute> {
+            withVehicle(TopLevelDestination.OVERVIEW) { vehicle ->
+                OverviewScreen(
+                    onAddFillUp = { navController.navigate(FuelEditRoute(vehicle.id)) },
+                    onOpenStats = { navController.navigate(StatsRoute) },
+                    onOpenMaintenance = { navController.navigateToTab(TopLevelDestination.MAINTENANCE) },
+                )
+            }
+        }
         composable<FuelRoute> {
             withVehicle(TopLevelDestination.FUEL) {
                 FuelLogScreen(
@@ -44,6 +54,9 @@ fun MotoManNavHost(
 
         composable<FuelEditRoute> {
             FuelEditScreen(onDone = navController::popBackStack)
+        }
+        composable<StatsRoute> {
+            StatsScreen(onBack = navController::popBackStack)
         }
         composable<VehicleListRoute> {
             VehicleListScreen(

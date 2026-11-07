@@ -32,8 +32,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.diiafyra.motoman.R
@@ -44,6 +42,7 @@ import io.github.diiafyra.motoman.ui.navigation.MotoManNavHost
 import io.github.diiafyra.motoman.ui.navigation.TopLevelDestination
 import io.github.diiafyra.motoman.ui.navigation.VehicleEditRoute
 import io.github.diiafyra.motoman.ui.navigation.VehicleListRoute
+import io.github.diiafyra.motoman.ui.navigation.navigateToTab
 
 /**
  * The shell: a top bar showing the selected vehicle, the bottom bar, and the navigation host. Screens
@@ -144,12 +143,3 @@ private fun VehicleSwitcher(
 
 private fun NavDestination.topLevelDestination(): TopLevelDestination? =
     TopLevelDestination.entries.firstOrNull { tab -> hierarchy.any { it.hasRoute(tab.routeClass) } }
-
-private fun NavHostController.navigateToTab(tab: TopLevelDestination) {
-    navigate(tab.route) {
-        // One copy of each tab on the back stack, each keeping its scroll position and state.
-        popUpTo(graph.findStartDestination().id) { saveState = true }
-        launchSingleTop = true
-        restoreState = true
-    }
-}

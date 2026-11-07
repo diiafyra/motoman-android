@@ -17,6 +17,10 @@ All notable changes to this project are documented here. The format follows
 - Fuel log: fill-ups grouped by month with monthly cost and volume, a form with date, odometer, litres,
   amount paid, full-tank and missed-fill flags, and the price per litre shown while typing.
 - Deleting a fill-up by swiping, with undo; also offered as a TalkBack action.
+- Overview tab: latest and average fuel economy, cost per km, this month's spending, odometer, and the
+  most urgent maintenance items with an icon and label for their status.
+- Statistics: spending and fuel economy per month for six months, as bar charts with a table of the
+  exact values.
 
 ## [0.1.0] - 2026-11-08
 

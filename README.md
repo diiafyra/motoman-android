@@ -17,6 +17,10 @@ Available now:
   values in a table below.
 - Several vehicles, one selected at a time. The top bar shows the selected vehicle; tapping it opens
   the list to switch, add or edit.
+- Maintenance by distance or time, whichever comes first. A new vehicle starts with the usual items
+  (oil, air filter, tyres, brake pads, and the yearly inspection for cars), sorted by urgency with an
+  icon and label for each status. Marking an item done records the date, odometer, cost and note, and
+  each item keeps its history.
 - Fuel log grouped by month with monthly totals. Litres can be typed with a comma or a dot, and the
   price per litre is shown as you type. The odometer must lie between the fill-ups before and after.
 - Swipe a fill-up away to delete it, with undo. TalkBack users get the same action from the row.
@@ -30,13 +34,17 @@ Available now:
 | --- | --- |
 | <img src="docs/screenshots/overview.png" width="240" alt="Overview with fuel economy, this month's spending and two maintenance items needing attention"> | <img src="docs/screenshots/statistics.png" width="240" alt="Bar charts of spending and fuel economy per month, with a table below"> |
 
+| Maintenance | Mark done | Item and history |
+| --- | --- | --- |
+| <img src="docs/screenshots/maintenance.png" width="240" alt="Maintenance items sorted by urgency, the first one overdue"> | <img src="docs/screenshots/maintenance-done.png" width="240" alt="Form to mark brake pads done, prefilled with today and the current odometer"> | <img src="docs/screenshots/maintenance-item.png" width="240" alt="Item form with intervals, last service and history"> |
+
 | Fill-up form | Fuel log | Undo |
 | --- | --- | --- |
 | <img src="docs/screenshots/fuel-form.png" width="240" alt="Fill-up form with the previous reading and the price per litre"> | <img src="docs/screenshots/fuel-log.png" width="240" alt="Fill-ups grouped under November 2026 with the month total"> | <img src="docs/screenshots/fuel-undo.png" width="240" alt="Snackbar offering to undo a deleted fill-up"> |
 
 Planned for v1.0:
 
-- Maintenance items due by distance or by time, with reminders
+- Reminders for maintenance as notifications
 - Nearby fuel stations and garages on a map
 - Vietnamese and English
 

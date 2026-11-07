@@ -1,12 +1,14 @@
 package io.github.diiafyra.motoman.feature.vehicle
 
 import androidx.lifecycle.SavedStateHandle
+import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
 import io.github.diiafyra.motoman.core.domain.model.FuelType
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.core.domain.model.VehicleType
 import io.github.diiafyra.motoman.core.domain.vehicle.InitialOdometerError
 import io.github.diiafyra.motoman.core.domain.vehicle.VehicleErrors
 import io.github.diiafyra.motoman.core.domain.vehicle.VehicleNameError
+import io.github.diiafyra.motoman.testing.FakeMaintenanceRepository
 import io.github.diiafyra.motoman.testing.FakePreferencesRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
 import io.github.diiafyra.motoman.testing.MainDispatcherRule
@@ -25,13 +27,16 @@ class VehicleEditViewModelTest {
 
     private val vehicles = FakeVehicleRepository()
     private val preferences = FakePreferencesRepository()
+    private val maintenance = FakeMaintenanceRepository()
 
     private fun viewModel(vehicleId: String? = null) =
         VehicleEditViewModel(
             SavedStateHandle(mapOf("vehicleId" to vehicleId)),
             vehicles,
+            maintenance,
             preferences,
             SequentialIdGenerator(),
+            TemplateNames { it.name },
         )
 
     @Test
@@ -88,6 +93,12 @@ class VehicleEditViewModelTest {
         )
         assertEquals("id-1", preferences.selectedId.value)
         assertTrue(viewModel.uiState.value.isDone)
+        // A car starts with five items, inspection included.
+        assertEquals(
+            listOf("OIL_CHANGE", "AIR_FILTER", "TYRES", "BRAKES", "INSPECTION"),
+            maintenance.items.value.map { it.name },
+        )
+        assertTrue(maintenance.items.value.all { it.vehicleId == "id-1" })
     }
 
     @Test
@@ -112,6 +123,7 @@ class VehicleEditViewModelTest {
         assertEquals(2, vehicles.vehicles.value.size)
         assertEquals("v2", preferences.selectedId.value)
         assertTrue(viewModel.uiState.value.isDone)
+        assertTrue("editing adds no items", maintenance.items.value.isEmpty())
     }
 
     @Test

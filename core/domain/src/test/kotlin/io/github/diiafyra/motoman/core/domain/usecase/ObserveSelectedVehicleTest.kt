@@ -76,5 +76,17 @@ class ObserveSelectedVehicleTest {
         override suspend fun setSelectedVehicleId(id: String) {
             state.value = id
         }
+
+        override fun observeRemindersEnabled(): Flow<Boolean> = error("unused")
+
+        override suspend fun setRemindersEnabled(enabled: Boolean) = error("unused")
+
+        override suspend fun sentReminderKeys(): Set<String> = error("unused")
+
+        override suspend fun setSentReminderKeys(keys: Set<String>) = error("unused")
+
+        override fun observeNotificationPromptDismissed(): Flow<Boolean> = error("unused")
+
+        override suspend fun setNotificationPromptDismissed() = error("unused")
     }
 }

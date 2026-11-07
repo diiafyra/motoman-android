@@ -128,4 +128,49 @@
     <string name="stats_no_value">–</string>
     <string name="stats_chart_description">%1$s. %2$s</string>
     <string name="stats_tap_hint">Chạm vào cột để xem giá trị.</string>
+
+    <string name="template_oil_change">Thay dầu máy</string>
+    <string name="template_air_filter">Lọc gió</string>
+    <string name="template_tyres">Lốp xe</string>
+    <string name="template_brakes">Má phanh</string>
+    <string name="template_inspection">Đăng kiểm</string>
+
+    <string name="maintenance_odometer">Số km hiện tại: %1$s km</string>
+    <string name="maintenance_manual_hint">Khoảng cách mặc định chỉ là gợi ý phổ biến. Hãy xem sổ hướng dẫn của hãng xe và sửa cho đúng.</string>
+    <string name="maintenance_mark_done">Đã làm</string>
+    <string name="maintenance_mark_done_named">Đánh dấu đã làm %1$s</string>
+    <string name="maintenance_add_item">Thêm hạng mục</string>
+    <string name="maintenance_empty_title">Chưa có hạng mục bảo dưỡng</string>
+    <string name="maintenance_empty_body">Thêm các việc bạn muốn theo dõi, như thay dầu, theo số km hoặc theo thời gian.</string>
+    <string name="maintenance_set_first">Đánh dấu đã làm một lần để bắt đầu tính.</string>
+
+    <string name="maintenance_new_item_title">Hạng mục mới</string>
+    <string name="maintenance_edit_item_title">Sửa hạng mục</string>
+    <string name="maintenance_item_name">Tên</string>
+    <string name="maintenance_interval_km">Mỗi</string>
+    <string name="maintenance_interval_months">hoặc mỗi</string>
+    <string name="unit_months">tháng</string>
+    <string name="maintenance_interval_help">Đến hạn theo mốc nào tới trước. Để trống một ô nếu chỉ dùng mốc còn lại.</string>
+    <string name="maintenance_last_done">Lần gần nhất: %1$s, ở %2$s km</string>
+    <string name="maintenance_last_done_km">Lần gần nhất ở %1$s km</string>
+    <string name="maintenance_never_done">Chưa làm lần nào</string>
+    <string name="maintenance_history_title">Lịch sử</string>
+    <string name="maintenance_history_empty">Chưa ghi lần bảo dưỡng nào.</string>
+    <string name="maintenance_history_entry">%1$s · %2$s km</string>
+    <string name="maintenance_delete_title">Xoá %1$s?</string>
+    <string name="maintenance_delete_text">Lịch sử bảo dưỡng của hạng mục này cũng bị xoá.</string>
+
+    <string name="maintenance_done_title">Đã làm %1$s</string>
+    <string name="maintenance_done_date">Ngày</string>
+    <string name="maintenance_done_odometer">Số km</string>
+    <string name="maintenance_done_cost">Chi phí (không bắt buộc)</string>
+    <string name="maintenance_done_note">Ghi chú (không bắt buộc)</string>
+
+    <string name="error_item_name_blank">Nhập tên hạng mục</string>
+    <string name="error_interval_not_positive">Phải lớn hơn 0</string>
+    <string name="error_interval_km_too_large">Tối đa %1$s km</string>
+    <plurals name="error_interval_months_too_large">
+        <item quantity="other">Tối đa %1$d tháng</item>
+    </plurals>
+    <string name="error_no_interval">Đặt số km, thời gian, hoặc cả hai</string>
 </resources>

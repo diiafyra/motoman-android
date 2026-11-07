@@ -34,3 +34,16 @@ data class FuelEditRoute(
 
 @Serializable
 data object StatsRoute
+
+/** [itemId] null opens an empty form for a new item. */
+@Serializable
+data class MaintenanceItemRoute(
+    val vehicleId: String,
+    val itemId: String? = null,
+)
+
+@Serializable
+data class MaintenanceDoneRoute(
+    val vehicleId: String,
+    val itemId: String,
+)

@@ -1,7 +1,5 @@
 package io.github.diiafyra.motoman.feature.fuel
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,30 +12,19 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -55,10 +42,10 @@ import io.github.diiafyra.motoman.core.domain.fuel.MAX_FILL_VOLUME_ML
 import io.github.diiafyra.motoman.core.domain.fuel.OdometerError
 import io.github.diiafyra.motoman.core.domain.fuel.VolumeError
 import io.github.diiafyra.motoman.core.domain.model.MAX_ODOMETER_KM
+import io.github.diiafyra.motoman.ui.designsystem.component.DateField
 import io.github.diiafyra.motoman.ui.designsystem.component.LoadingState
 import io.github.diiafyra.motoman.ui.designsystem.component.MotoManTextField
 import io.github.diiafyra.motoman.ui.designsystem.theme.MotoManTheme
-import io.github.diiafyra.motoman.ui.format.formatDate
 import io.github.diiafyra.motoman.ui.format.formatInteger
 import io.github.diiafyra.motoman.ui.format.formatLiters
 import java.time.LocalDate
@@ -106,8 +93,6 @@ internal fun FuelEditContent(
     state: FuelEditUiState,
     actions: FuelEditActions,
 ) {
-    var isDatePickerOpen by rememberSaveable { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -139,7 +124,10 @@ internal fun FuelEditContent(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             DateField(
+                label = stringResource(R.string.fuel_date),
                 date = state.date,
+                latest = state.today,
+                onDateChange = actions.onDateChange,
                 error =
                     if (state.errors.filledAt ==
                         FilledAtError.IN_FUTURE
@@ -148,7 +136,6 @@ internal fun FuelEditContent(
                     } else {
                         null
                     },
-                onClick = { isDatePickerOpen = true },
             )
 
             MotoManTextField(
@@ -228,18 +215,6 @@ internal fun FuelEditContent(
             }
         }
     }
-
-    if (isDatePickerOpen) {
-        FuelDatePicker(
-            date = state.date,
-            today = state.today,
-            onConfirm = {
-                actions.onDateChange(it)
-                isDatePickerOpen = false
-            },
-            onDismiss = { isDatePickerOpen = false },
-        )
-    }
 }
 
 @Composable
@@ -278,34 +253,6 @@ private fun volumeError(error: VolumeError?): String? =
         is VolumeError.TooLarge -> stringResource(R.string.error_volume_too_large, formatLiters(MAX_FILL_VOLUME_ML))
         null -> null
     }
-
-/** A read-only field that opens the date picker, so the date looks like the other fields. */
-@Composable
-private fun DateField(
-    date: LocalDate,
-    error: String?,
-    onClick: () -> Unit,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    LaunchedEffect(interactionSource) {
-        interactionSource.interactions.collect { if (it is PressInteraction.Release) onClick() }
-    }
-    OutlinedTextField(
-        value = formatDate(date),
-        onValueChange = {},
-        readOnly = true,
-        label = { Text(stringResource(R.string.fuel_date)) },
-        trailingIcon = {
-            IconButton(onClick = onClick) {
-                Icon(Icons.Filled.DateRange, stringResource(R.string.fuel_choose_date))
-            }
-        },
-        isError = error != null,
-        supportingText = error?.let { { Text(it) } },
-        interactionSource = interactionSource,
-        modifier = Modifier.fillMaxWidth(),
-    )
-}
 
 @Composable
 private fun ToggleRow(
@@ -346,42 +293,6 @@ private fun HelpText(text: String) {
         modifier = Modifier.padding(start = 16.dp),
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun FuelDatePicker(
-    date: LocalDate,
-    today: LocalDate,
-    onConfirm: (LocalDate) -> Unit,
-    onDismiss: () -> Unit,
-) {
-    // DatePicker works in UTC milliseconds at the start of the day.
-    val pickerState =
-        rememberDatePickerState(
-            initialSelectedDateMillis = date.toEpochDay() * MILLIS_PER_DAY,
-            selectableDates =
-                object : SelectableDates {
-                    override fun isSelectableDate(utcTimeMillis: Long) =
-                        utcTimeMillis / MILLIS_PER_DAY <= today.toEpochDay()
-
-                    override fun isSelectableYear(year: Int) = year <= today.year
-                },
-        )
-    DatePickerDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(onClick = {
-                pickerState.selectedDateMillis?.let { onConfirm(LocalDate.ofEpochDay(it / MILLIS_PER_DAY)) }
-                    ?: onDismiss()
-            }) { Text(stringResource(R.string.action_ok)) }
-        },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
-    ) {
-        DatePicker(state = pickerState)
-    }
-}
-
-private const val MILLIS_PER_DAY = 86_400_000L
 
 @Preview(showBackground = true)
 @Composable

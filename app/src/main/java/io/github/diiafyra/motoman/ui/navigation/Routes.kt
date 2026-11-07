@@ -24,3 +24,10 @@ data object VehicleListRoute
 data class VehicleEditRoute(
     val vehicleId: String? = null,
 )
+
+/** [entryId] null opens an empty form for a new fill-up. */
+@Serializable
+data class FuelEditRoute(
+    val vehicleId: String,
+    val entryId: String? = null,
+)

@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
+import io.github.diiafyra.motoman.feature.fuel.FuelEditScreen
+import io.github.diiafyra.motoman.feature.fuel.FuelLogScreen
 import io.github.diiafyra.motoman.feature.placeholder.TabPlaceholder
 import io.github.diiafyra.motoman.feature.vehicle.VehicleEditScreen
 import io.github.diiafyra.motoman.feature.vehicle.VehicleListScreen
@@ -29,10 +31,20 @@ fun MotoManNavHost(
         modifier = Modifier.padding(contentPadding),
     ) {
         composable<OverviewRoute> { Tab(TopLevelDestination.OVERVIEW, withVehicle) }
-        composable<FuelRoute> { Tab(TopLevelDestination.FUEL, withVehicle) }
+        composable<FuelRoute> {
+            withVehicle(TopLevelDestination.FUEL) {
+                FuelLogScreen(
+                    onAddEntry = { vehicleId -> navController.navigate(FuelEditRoute(vehicleId)) },
+                    onEditEntry = { vehicleId, entryId -> navController.navigate(FuelEditRoute(vehicleId, entryId)) },
+                )
+            }
+        }
         composable<MaintenanceRoute> { Tab(TopLevelDestination.MAINTENANCE, withVehicle) }
         composable<NearbyRoute> { Tab(TopLevelDestination.NEARBY, withVehicle) }
 
+        composable<FuelEditRoute> {
+            FuelEditScreen(onDone = navController::popBackStack)
+        }
         composable<VehicleListRoute> {
             VehicleListScreen(
                 onBack = navController::popBackStack,

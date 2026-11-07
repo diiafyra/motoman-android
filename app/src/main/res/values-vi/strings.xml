@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_save">Lưu</string>
+    <string name="action_delete">Xoá</string>
+    <string name="action_cancel">Huỷ</string>
+    <string name="action_back">Quay lại</string>
+
+    <string name="value_km">%1$s km</string>
+
+    <string name="tab_overview">Tổng quan</string>
+    <string name="tab_fuel">Đổ xăng</string>
+    <string name="tab_maintenance">Bảo dưỡng</string>
+    <string name="tab_nearby">Gần tôi</string>
+
+    <string name="switch_vehicle">Đổi xe, đang chọn %1$s</string>
+
+    <string name="no_vehicle_title">Thêm chiếc xe đầu tiên</string>
+    <string name="no_vehicle_body">Mọi tab đều làm việc với một chiếc xe. Thêm xe máy hoặc ô tô của bạn để bắt đầu.</string>
+    <string name="placeholder_body">Màn hình này đang được xây dựng.</string>
+
+    <string name="vehicles_title">Xe của tôi</string>
+    <string name="vehicles_empty_title">Chưa có xe nào</string>
+    <string name="vehicles_empty_body">Thêm xe máy hoặc ô tô để bắt đầu ghi đổ xăng và bảo dưỡng.</string>
+    <string name="vehicle_add">Thêm xe</string>
+    <string name="vehicle_summary">%1$s · %2$s · %3$s</string>
+    <string name="vehicle_edit_named">Sửa %1$s</string>
+
+    <string name="vehicle_new_title">Xe mới</string>
+    <string name="vehicle_edit_title">Sửa xe</string>
+    <string name="vehicle_name">Tên xe</string>
+    <string name="vehicle_type">Loại xe</string>
+    <string name="vehicle_fuel_type">Nhiên liệu</string>
+    <string name="vehicle_initial_odometer">Số km hiện tại</string>
+    <string name="vehicle_initial_odometer_help">Số km của các lần đổ xăng và bảo dưỡng không được nhỏ hơn số này.</string>
+    <string name="vehicle_delete_title">Xoá %1$s?</string>
+    <string name="vehicle_delete_text">Toàn bộ lịch sử đổ xăng và bảo dưỡng của xe cũng bị xoá.</string>
+
+    <string name="vehicle_type_motorbike">Xe máy</string>
+    <string name="vehicle_type_car">Ô tô</string>
+    <string name="fuel_type_diesel">Dầu diesel</string>
+    <string name="fuel_type_other">Khác</string>
+
+    <string name="error_name_blank">Nhập tên xe</string>
+    <plurals name="error_name_too_long">
+        <item quantity="other">Tối đa %1$d ký tự</item>
+    </plurals>
+    <string name="error_odometer_missing">Nhập số km trên đồng hồ</string>
+    <string name="error_odometer_too_large">Tối đa %1$s km</string>
+</resources>

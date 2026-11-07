@@ -1,0 +1,20 @@
+# Gradle and build output
+.gradle/
+.kotlin/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Local configuration and secrets: never commit these
+local.properties
+keystore.properties
+*.jks
+*.keystore
+google-services.json
+secrets.properties

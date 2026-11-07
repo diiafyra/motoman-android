@@ -11,6 +11,9 @@ import androidx.navigation.compose.composable
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.feature.fuel.FuelEditScreen
 import io.github.diiafyra.motoman.feature.fuel.FuelLogScreen
+import io.github.diiafyra.motoman.feature.maintenance.MaintenanceDoneScreen
+import io.github.diiafyra.motoman.feature.maintenance.MaintenanceItemEditScreen
+import io.github.diiafyra.motoman.feature.maintenance.MaintenanceScreen
 import io.github.diiafyra.motoman.feature.overview.OverviewScreen
 import io.github.diiafyra.motoman.feature.placeholder.TabPlaceholder
 import io.github.diiafyra.motoman.feature.stats.StatsScreen
@@ -49,11 +52,35 @@ fun MotoManNavHost(
                 )
             }
         }
-        composable<MaintenanceRoute> { Tab(TopLevelDestination.MAINTENANCE, withVehicle) }
+        composable<MaintenanceRoute> {
+            withVehicle(TopLevelDestination.MAINTENANCE) {
+                MaintenanceScreen(
+                    onAddItem = { vehicleId -> navController.navigate(MaintenanceItemRoute(vehicleId)) },
+                    onEditItem = {
+                        vehicleId,
+                        itemId,
+                        ->
+                        navController.navigate(MaintenanceItemRoute(vehicleId, itemId))
+                    },
+                    onMarkDone = {
+                        vehicleId,
+                        itemId,
+                        ->
+                        navController.navigate(MaintenanceDoneRoute(vehicleId, itemId))
+                    },
+                )
+            }
+        }
         composable<NearbyRoute> { Tab(TopLevelDestination.NEARBY, withVehicle) }
 
         composable<FuelEditRoute> {
             FuelEditScreen(onDone = navController::popBackStack)
+        }
+        composable<MaintenanceItemRoute> {
+            MaintenanceItemEditScreen(onDone = navController::popBackStack)
+        }
+        composable<MaintenanceDoneRoute> {
+            MaintenanceDoneScreen(onDone = navController::popBackStack)
         }
         composable<StatsRoute> {
             StatsScreen(onBack = navController::popBackStack)

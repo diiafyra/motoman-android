@@ -4,10 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
+import io.github.diiafyra.motoman.core.domain.maintenance.templateItems
 import io.github.diiafyra.motoman.core.domain.model.FuelType
 import io.github.diiafyra.motoman.core.domain.model.MAX_ODOMETER_KM
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.core.domain.model.VehicleType
+import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
 import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.repository.VehicleRepository
 import io.github.diiafyra.motoman.core.domain.util.IdGenerator
@@ -44,8 +47,10 @@ class VehicleEditViewModel
     constructor(
         savedStateHandle: SavedStateHandle,
         private val vehicles: VehicleRepository,
+        private val maintenance: MaintenanceRepository,
         private val preferences: PreferencesRepository,
         private val idGenerator: IdGenerator,
+        private val templateNames: TemplateNames,
     ) : ViewModel() {
         // Navigation puts VehicleEditRoute.vehicleId into the saved state under its property name.
         private val vehicleId: String? = savedStateHandle["vehicleId"]
@@ -100,18 +105,20 @@ class VehicleEditViewModel
 
             state.update { it.copy(isSaving = true) }
             viewModelScope.launch {
-                val id = vehicleId ?: idGenerator.newId()
-                vehicles.save(
+                val vehicle =
                     Vehicle(
-                        id = id,
+                        id = vehicleId ?: idGenerator.newId(),
                         name = draft.name.trim(),
                         type = draft.type,
                         fuelType = draft.fuelType,
                         initialOdometerKm = requireNotNull(draft.initialOdometerKm),
-                    ),
-                )
-                // A vehicle just added is the one the user wants to log for next.
-                if (vehicleId == null) preferences.setSelectedVehicleId(id)
+                    )
+                vehicles.save(vehicle)
+                if (vehicleId == null) {
+                    // A new vehicle starts with the usual maintenance items, and becomes the selected one.
+                    maintenance.saveItems(templateItems(vehicle, templateNames, idGenerator))
+                    preferences.setSelectedVehicleId(vehicle.id)
+                }
                 state.update { it.copy(isSaving = false, isDone = true) }
             }
         }

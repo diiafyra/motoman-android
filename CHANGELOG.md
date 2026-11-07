@@ -19,6 +19,10 @@ All notable changes to this project are documented here. The format follows
 - Deleting a fill-up by swiping, with undo; also offered as a TalkBack action.
 - Overview tab: latest and average fuel economy, cost per km, this month's spending, odometer, and the
   most urgent maintenance items with an icon and label for their status.
+- Maintenance tab: items sorted by urgency, mark done with date, odometer, cost and note, add, edit
+  and delete items, and the service history of each item.
+- A new vehicle starts with the usual maintenance items for its type, with a note to check the
+  owner's manual.
 - Statistics: spending and fuel economy per month for six months, as bar charts with a table of the
   exact values.
 

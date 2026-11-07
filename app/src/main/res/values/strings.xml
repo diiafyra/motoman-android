@@ -154,4 +154,55 @@
     <string name="stats_no_value">–</string>
     <string name="stats_chart_description">%1$s. %2$s</string>
     <string name="stats_tap_hint">Tap a bar to see its value.</string>
+
+    <!-- Maintenance templates: names given to the starting items of a new vehicle -->
+    <string name="template_oil_change">Oil change</string>
+    <string name="template_air_filter">Air filter</string>
+    <string name="template_tyres">Tyres</string>
+    <string name="template_brakes">Brake pads</string>
+    <string name="template_inspection">Inspection</string>
+
+    <!-- Maintenance list -->
+    <string name="maintenance_odometer">Odometer now: %1$s km</string>
+    <string name="maintenance_manual_hint">Default intervals are common suggestions. Check your owner’s manual and edit them to match.</string>
+    <string name="maintenance_mark_done">Mark done</string>
+    <string name="maintenance_mark_done_named">Mark %1$s done</string>
+    <string name="maintenance_add_item">Add item</string>
+    <string name="maintenance_empty_title">No maintenance items</string>
+    <string name="maintenance_empty_body">Add the jobs you want to keep track of, like oil changes, by distance or by time.</string>
+    <string name="maintenance_set_first">Mark it done once to start counting.</string>
+
+    <!-- Maintenance item form -->
+    <string name="maintenance_new_item_title">New item</string>
+    <string name="maintenance_edit_item_title">Edit item</string>
+    <string name="maintenance_item_name">Name</string>
+    <string name="maintenance_interval_km">Every</string>
+    <string name="maintenance_interval_months">or every</string>
+    <string name="unit_months">months</string>
+    <string name="maintenance_interval_help">Due at whichever comes first. Leave one empty to use only the other.</string>
+    <string name="maintenance_last_done">Last done: %1$s at %2$s km</string>
+    <string name="maintenance_last_done_km">Last done at %1$s km</string>
+    <string name="maintenance_never_done">Not done yet</string>
+    <string name="maintenance_history_title">History</string>
+    <string name="maintenance_history_empty">No services recorded yet.</string>
+    <string name="maintenance_history_entry">%1$s · %2$s km</string>
+    <string name="maintenance_delete_title">Delete %1$s?</string>
+    <string name="maintenance_delete_text">Its service history is deleted too.</string>
+
+    <!-- Mark done form -->
+    <string name="maintenance_done_title">Mark %1$s done</string>
+    <string name="maintenance_done_date">Date</string>
+    <string name="maintenance_done_odometer">Odometer</string>
+    <string name="maintenance_done_cost">Cost (optional)</string>
+    <string name="maintenance_done_note">Note (optional)</string>
+
+    <!-- Maintenance errors -->
+    <string name="error_item_name_blank">Enter a name</string>
+    <string name="error_interval_not_positive">Must be more than 0</string>
+    <string name="error_interval_km_too_large">At most %1$s km</string>
+    <plurals name="error_interval_months_too_large">
+        <item quantity="one">At most %1$d month</item>
+        <item quantity="other">At most %1$d months</item>
+    </plurals>
+    <string name="error_no_interval">Set a distance, a time, or both</string>
 </resources>

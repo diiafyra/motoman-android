@@ -102,6 +102,14 @@ date. The charts are drawn with `Canvas` in `BarChart`: one series per chart, on
 bars from zero, a value label only on the selected bar, and the same numbers as a table for screen
 readers.
 
+### Maintenance
+
+A new vehicle gets its starting items from `templateItems`: the template list and default intervals
+live in the domain, the names come from string resources in the app's language at that moment. The
+tab lists items with `rankByUrgency` at the current odometer. Marking an item done creates a record
+through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
+touches its baseline.
+
 ### Fuel log
 
 The Fuel tab groups fill-ups by calendar month in the user's time zone. The form validates with the

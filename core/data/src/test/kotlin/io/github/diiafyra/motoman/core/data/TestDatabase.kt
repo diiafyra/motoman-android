@@ -12,6 +12,7 @@ import io.github.diiafyra.motoman.core.domain.model.VehicleType
 import io.github.diiafyra.motoman.core.domain.util.Clock
 import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.ZoneOffset
 
 internal fun inMemoryDatabase(): MotoManDatabase =
@@ -26,7 +27,9 @@ internal class FakeClock(
 ) : Clock {
     override fun now(): Instant = now
 
-    override fun today(): LocalDate = now.atZone(ZoneOffset.UTC).toLocalDate()
+    override fun today(): LocalDate = now.atZone(zone()).toLocalDate()
+
+    override fun zone(): ZoneId = ZoneOffset.UTC
 
     fun advanceSeconds(seconds: Long) {
         now = now.plusSeconds(seconds)

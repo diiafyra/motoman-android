@@ -28,6 +28,8 @@ Available now:
   price per litre is shown as you type. The odometer must lie between the fill-ups before and after.
 - Swipe a fill-up away to delete it, with undo. TalkBack users get the same action from the row.
 - Form errors shown next to each field, and read out by TalkBack.
+- Vietnamese and English, chosen per app in Settings (or following the phone), on every supported
+  Android version. Settings also turns reminders off and links the privacy policy.
 
 | No vehicle yet | Vehicle form | Vehicles |
 | --- | --- | --- |
@@ -45,6 +47,10 @@ Available now:
 | --- | --- |
 | <img src="docs/screenshots/notification-prompt.png" width="240" alt="Card in the Maintenance tab asking to allow reminders"> | <img src="docs/screenshots/reminder-notification.png" width="240" alt="Notification: Oil change is due soon, Wave Alpha, in 150 km"> |
 
+| Tổng quan | Bảo dưỡng | Cài đặt |
+| --- | --- | --- |
+| <img src="docs/screenshots/overview-vi.png" width="240" alt="Overview in Vietnamese"> | <img src="docs/screenshots/maintenance-vi.png" width="240" alt="Maintenance in Vietnamese"> | <img src="docs/screenshots/settings-vi.png" width="240" alt="Settings in Vietnamese with the language choice"> |
+
 | Fill-up form | Fuel log | Undo |
 | --- | --- | --- |
 | <img src="docs/screenshots/fuel-form.png" width="240" alt="Fill-up form with the previous reading and the price per litre"> | <img src="docs/screenshots/fuel-log.png" width="240" alt="Fill-ups grouped under November 2026 with the month total"> | <img src="docs/screenshots/fuel-undo.png" width="240" alt="Snackbar offering to undo a deleted fill-up"> |
@@ -52,7 +58,6 @@ Available now:
 Planned for v1.0:
 
 - Nearby fuel stations and garages on a map
-- Vietnamese and English
 
 ## Architecture
 
@@ -82,7 +87,8 @@ Each library is here because a feature needs it.
 | Dependency injection | Hilt |
 | Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
 | Background work | WorkManager with Hilt workers |
-| Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories |
+| Localisation | Per-app language with AppCompat, generated locale config |
+| Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories; Compose UI tests on Robolectric with Hilt |
 | Build | Gradle version catalog, KSP, JDK 21 |
 | Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
 
@@ -95,7 +101,7 @@ Requirements: JDK 21 and the Android SDK with platform 37.
 
 ```sh
 ./gradlew assembleDebug          # build the debug APK
-./gradlew test                   # unit tests
+./gradlew test                   # unit tests and the main-flow UI test (Robolectric, no emulator)
 ./gradlew ktlintCheck lint       # style and static checks, same as CI
 ```
 

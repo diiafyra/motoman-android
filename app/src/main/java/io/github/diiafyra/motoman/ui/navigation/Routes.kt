@@ -47,3 +47,6 @@ data class MaintenanceDoneRoute(
     val vehicleId: String,
     val itemId: String,
 )
+
+@Serializable
+data object SettingsRoute

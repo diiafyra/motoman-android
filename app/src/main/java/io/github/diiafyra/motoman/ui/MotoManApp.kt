@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -39,6 +41,7 @@ import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.ui.designsystem.component.EmptyState
 import io.github.diiafyra.motoman.ui.designsystem.component.LoadingState
 import io.github.diiafyra.motoman.ui.navigation.MotoManNavHost
+import io.github.diiafyra.motoman.ui.navigation.SettingsRoute
 import io.github.diiafyra.motoman.ui.navigation.TopLevelDestination
 import io.github.diiafyra.motoman.ui.navigation.VehicleEditRoute
 import io.github.diiafyra.motoman.ui.navigation.VehicleListRoute
@@ -66,6 +69,11 @@ fun MotoManApp(viewModel: AppViewModel = hiltViewModel()) {
                             Text(stringResource(R.string.app_name))
                         } else {
                             VehicleSwitcher(selected, onClick = { navController.navigate(VehicleListRoute) })
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { navController.navigate(SettingsRoute) }) {
+                            Icon(Icons.Filled.Settings, stringResource(R.string.settings_open))
                         }
                     },
                 )

@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-08
+
 ### Added
 
 - Bottom navigation with Overview, Fuel, Maintenance and Nearby tabs, using type-safe routes.
@@ -23,6 +25,9 @@ All notable changes to this project are documented here. The format follows
   and delete items, and the service history of each item.
 - A new vehicle starts with the usual maintenance items for its type, with a note to check the
   owner's manual.
+- Settings: app language (phone, Tiếng Việt, English), reminders on or off, version and privacy policy.
+- Per-app language on every supported Android version.
+- A UI test of the main flow, adding a vehicle and logging a fill-up, run on every pull request.
 - Maintenance reminders: a daily check notifies once when an item is due soon and once more if it
   becomes overdue, for every vehicle. Android 13+ asks for notification permission from the
   Maintenance tab.
@@ -52,5 +57,6 @@ All notable changes to this project are documented here. The format follows
 
 - The project builds with JDK 21, which Robolectric needs for the Android 16 sandbox.
 
-[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...v0.5.0
 [0.1.0]: https://github.com/diiafyra/motoman-android/releases/tag/v0.1.0

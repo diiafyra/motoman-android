@@ -216,4 +216,18 @@
     <string name="notification_prompt_body">Sổ Xe can notify you once when an item is due soon and again if it becomes overdue.</string>
     <string name="notification_prompt_allow">Allow</string>
     <string name="notification_prompt_not_now">Not now</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_open">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">Same as the phone</string>
+    <string name="language_vietnamese" translatable="false">Tiếng Việt</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="settings_reminders_section">Reminders</string>
+    <string name="settings_reminders">Maintenance reminders</string>
+    <string name="settings_reminders_body">A notification when an item is due soon or overdue</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_privacy">Privacy policy</string>
 </resources>

@@ -89,6 +89,19 @@ A screen that closes after an action (saving a form, choosing a vehicle) waits f
 in its state rather than closing right away, because closing cancels the ViewModel's scope and with it
 any write still in flight.
 
+### Overview and statistics
+
+The Overview tab combines the selected vehicle's fill-ups, maintenance items and records into one
+`UiState`: the latest and average figures from `calculateFuelEconomy`, this month's spending, the
+current odometer and the items `rankByUrgency` puts first. When the newest stretch was dropped for a
+missed fill-up, the screen says that the latest figure comes from an earlier stretch.
+
+Statistics come from `monthlyStats`: spending counts every fill-up in its month, and fuel economy counts
+the full-tank segments that ended in the month, since the fuel inside a segment cannot be placed on a
+date. The charts are drawn with `Canvas` in `BarChart`: one series per chart, one hue from the theme,
+bars from zero, a value label only on the selected bar, and the same numbers as a table for screen
+readers.
+
 ### Fuel log
 
 The Fuel tab groups fill-ups by calendar month in the user's time zone. The form validates with the

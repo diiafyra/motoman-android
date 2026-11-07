@@ -11,6 +11,10 @@ only adds things on top, such as nearby fuel stations and garages.
 
 Available now:
 
+- Overview: latest and average fuel economy (L/100 km), cost per km, this month's spending, the
+  odometer, and the maintenance items that need attention.
+- Statistics: spending and fuel economy per month for the last six months, as bar charts with the exact
+  values in a table below.
 - Several vehicles, one selected at a time. The top bar shows the selected vehicle; tapping it opens
   the list to switch, add or edit.
 - Fuel log grouped by month with monthly totals. Litres can be typed with a comma or a dot, and the
@@ -22,13 +26,16 @@ Available now:
 | --- | --- | --- |
 | <img src="docs/screenshots/no-vehicle.png" width="240" alt="Overview tab asking to add a first vehicle"> | <img src="docs/screenshots/vehicle-form-errors.png" width="240" alt="New vehicle form showing an error under each empty field"> | <img src="docs/screenshots/vehicle-list.png" width="240" alt="Vehicle list with the selected vehicle marked"> |
 
+| Overview | Statistics |
+| --- | --- |
+| <img src="docs/screenshots/overview.png" width="240" alt="Overview with fuel economy, this month's spending and two maintenance items needing attention"> | <img src="docs/screenshots/statistics.png" width="240" alt="Bar charts of spending and fuel economy per month, with a table below"> |
+
 | Fill-up form | Fuel log | Undo |
 | --- | --- | --- |
 | <img src="docs/screenshots/fuel-form.png" width="240" alt="Fill-up form with the previous reading and the price per litre"> | <img src="docs/screenshots/fuel-log.png" width="240" alt="Fill-ups grouped under November 2026 with the month total"> | <img src="docs/screenshots/fuel-undo.png" width="240" alt="Snackbar offering to undo a deleted fill-up"> |
 
 Planned for v1.0:
 
-- Fuel economy (L/100 km), cost per km and monthly charts
 - Maintenance items due by distance or by time, with reminders
 - Nearby fuel stations and garages on a map
 - Vietnamese and English

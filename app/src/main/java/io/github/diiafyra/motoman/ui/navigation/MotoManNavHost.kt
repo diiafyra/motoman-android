@@ -16,6 +16,7 @@ import io.github.diiafyra.motoman.feature.maintenance.MaintenanceItemEditScreen
 import io.github.diiafyra.motoman.feature.maintenance.MaintenanceScreen
 import io.github.diiafyra.motoman.feature.overview.OverviewScreen
 import io.github.diiafyra.motoman.feature.placeholder.TabPlaceholder
+import io.github.diiafyra.motoman.feature.settings.SettingsScreen
 import io.github.diiafyra.motoman.feature.stats.StatsScreen
 import io.github.diiafyra.motoman.feature.vehicle.VehicleEditScreen
 import io.github.diiafyra.motoman.feature.vehicle.VehicleListScreen
@@ -81,6 +82,9 @@ fun MotoManNavHost(
         }
         composable<MaintenanceDoneRoute> {
             MaintenanceDoneScreen(onDone = navController::popBackStack)
+        }
+        composable<SettingsRoute> {
+            SettingsScreen(onBack = navController::popBackStack)
         }
         composable<StatsRoute> {
             StatsScreen(onBack = navController::popBackStack)

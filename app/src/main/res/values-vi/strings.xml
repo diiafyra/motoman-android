@@ -183,4 +183,15 @@
     <string name="notification_prompt_body">Sổ Xe sẽ báo một lần khi hạng mục sắp đến hạn và một lần nữa nếu đã quá hạn.</string>
     <string name="notification_prompt_allow">Cho phép</string>
     <string name="notification_prompt_not_now">Để sau</string>
+
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_open">Cài đặt</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_language_system">Theo điện thoại</string>
+    <string name="settings_reminders_section">Nhắc lịch</string>
+    <string name="settings_reminders">Nhắc lịch bảo dưỡng</string>
+    <string name="settings_reminders_body">Thông báo khi một hạng mục sắp đến hạn hoặc quá hạn</string>
+    <string name="settings_about">Thông tin</string>
+    <string name="settings_version">Phiên bản</string>
+    <string name="settings_privacy">Chính sách quyền riêng tư</string>
 </resources>

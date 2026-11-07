@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import io.github.diiafyra.motoman.R
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceTemplate
 import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
+import io.github.diiafyra.motoman.feature.settings.AppCompatLanguageController
+import io.github.diiafyra.motoman.feature.settings.LanguageController
 import io.github.diiafyra.motoman.work.AndroidReminderNotifier
 import io.github.diiafyra.motoman.work.ReminderNotifier
 
@@ -39,4 +41,7 @@ object AppModule {
 abstract class AppBindings {
     @Binds
     abstract fun reminderNotifier(impl: AndroidReminderNotifier): ReminderNotifier
+
+    @Binds
+    abstract fun languageController(impl: AppCompatLanguageController): LanguageController
 }

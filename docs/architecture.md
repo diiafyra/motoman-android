@@ -112,6 +112,18 @@ tab lists items with `rankByUrgency` at the current odometer. Marking an item do
 through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
 touches its baseline.
 
+### Nearby
+
+`NearbyViewModel` walks one path: permission, position, request, result, and each step has a state
+(`NeedsPermission`, `Locating`, `LocationUnavailable`, `Loading`, `Content`, `Empty`, `Error`,
+`Disabled`). `FindNearbyPlaces` asks `PlacesCache` first: results are kept in memory per grid cell of
+about 1 km for 30 minutes, so panning around the same area does not call the shared Overpass service
+again. Failures are never cached. The screen is switched off remotely through `FeatureFlags`.
+
+The map is Google Maps Compose. Its key is read from `local.properties` or the `MAPS_API_KEY`
+environment variable and never committed; without it the app still builds and the screen shows the
+same places as a list, so the feature degrades instead of breaking.
+
 ### Network
 
 Retrofit with kotlinx.serialization talks to Overpass; OkHttp adds a `User-Agent` that identifies the

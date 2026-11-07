@@ -106,4 +106,52 @@
     <string name="error_volume_too_large">At most %1$s L</string>
     <string name="error_cost_missing">Enter the amount paid</string>
     <string name="error_cost_not_positive">Must be more than 0</string>
+
+    <!-- Overview -->
+    <string name="overview_economy_title">Fuel economy</string>
+    <string name="overview_economy_latest">Latest</string>
+    <string name="overview_economy_average">Average</string>
+    <string name="value_l_per_100km">%1$s L/100 km</string>
+    <string name="value_vnd_per_km">%1$s ₫/km</string>
+    <string name="overview_economy_need_full_tank">Log one more full tank to see fuel economy. It is measured between two full fill-ups.</string>
+    <string name="overview_economy_latest_skipped">The newest stretch had a missed fill-up, so the latest figure is from an earlier one.</string>
+    <string name="overview_month_title">This month</string>
+    <string name="overview_month_spent">Spent on fuel</string>
+    <string name="overview_month_volume">Fuel bought</string>
+    <string name="value_liters">%1$s L</string>
+    <string name="overview_odometer">Odometer</string>
+    <string name="overview_maintenance_title">Maintenance</string>
+    <string name="overview_maintenance_none">No maintenance items yet.</string>
+    <string name="overview_maintenance_all_ok">Nothing due soon.</string>
+    <string name="overview_see_maintenance">See maintenance</string>
+    <string name="overview_see_stats">See statistics</string>
+    <string name="overview_no_fill_ups_title">No fill-ups yet</string>
+    <string name="overview_no_fill_ups_body">Log your fill-ups to see spending and fuel economy here.</string>
+
+    <!-- Maintenance status labels -->
+    <string name="status_overdue">Overdue</string>
+    <string name="status_due_soon">Due soon</string>
+    <string name="status_ok">OK</string>
+    <string name="status_no_baseline">Not started</string>
+    <string name="due_in_km">in %1$s km</string>
+    <string name="due_over_km">%1$s km over</string>
+    <plurals name="due_in_days">
+        <item quantity="one">in %1$d day</item>
+        <item quantity="other">in %1$d days</item>
+    </plurals>
+    <plurals name="due_over_days">
+        <item quantity="one">%1$d day over</item>
+        <item quantity="other">%1$d days over</item>
+    </plurals>
+    <string name="due_today">today</string>
+
+    <!-- Statistics -->
+    <string name="stats_title">Statistics</string>
+    <string name="stats_cost_title">Spending per month</string>
+    <string name="stats_economy_title">Fuel economy per month</string>
+    <string name="stats_economy_empty">Needs two full-tank fill-ups in the same stretch. Months without a complete stretch are left blank.</string>
+    <string name="stats_table_title">By month</string>
+    <string name="stats_no_value">–</string>
+    <string name="stats_chart_description">%1$s. %2$s</string>
+    <string name="stats_tap_hint">Tap a bar to see its value.</string>
 </resources>

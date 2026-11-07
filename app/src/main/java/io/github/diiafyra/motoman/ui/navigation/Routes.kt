@@ -31,3 +31,6 @@ data class FuelEditRoute(
     val vehicleId: String,
     val entryId: String? = null,
 )
+
+@Serializable
+data object StatsRoute

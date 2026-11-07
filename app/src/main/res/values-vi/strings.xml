@@ -85,4 +85,47 @@
     <string name="error_volume_too_large">Tối đa %1$s L</string>
     <string name="error_cost_missing">Nhập số tiền đã trả</string>
     <string name="error_cost_not_positive">Phải lớn hơn 0</string>
+
+    <string name="overview_economy_title">Mức tiêu hao</string>
+    <string name="overview_economy_latest">Gần nhất</string>
+    <string name="overview_economy_average">Trung bình</string>
+    <string name="value_l_per_100km">%1$s L/100 km</string>
+    <string name="value_vnd_per_km">%1$s ₫/km</string>
+    <string name="overview_economy_need_full_tank">Ghi thêm một lần đổ đầy bình để xem mức tiêu hao. Mức tiêu hao được đo giữa hai lần đổ đầy.</string>
+    <string name="overview_economy_latest_skipped">Đoạn mới nhất có lần đổ bị bỏ lỡ, nên số gần nhất lấy từ đoạn trước đó.</string>
+    <string name="overview_month_title">Tháng này</string>
+    <string name="overview_month_spent">Tiền xăng</string>
+    <string name="overview_month_volume">Số lít đã đổ</string>
+    <string name="value_liters">%1$s L</string>
+    <string name="overview_odometer">Số km</string>
+    <string name="overview_maintenance_title">Bảo dưỡng</string>
+    <string name="overview_maintenance_none">Chưa có hạng mục bảo dưỡng nào.</string>
+    <string name="overview_maintenance_all_ok">Chưa có hạng mục nào sắp đến hạn.</string>
+    <string name="overview_see_maintenance">Xem bảo dưỡng</string>
+    <string name="overview_see_stats">Xem thống kê</string>
+    <string name="overview_no_fill_ups_title">Chưa có lần đổ xăng nào</string>
+    <string name="overview_no_fill_ups_body">Ghi lại các lần đổ xăng để xem chi phí và mức tiêu hao ở đây.</string>
+
+    <string name="status_overdue">Quá hạn</string>
+    <string name="status_due_soon">Sắp đến hạn</string>
+    <string name="status_ok">Ổn</string>
+    <string name="status_no_baseline">Chưa có mốc</string>
+    <string name="due_in_km">còn %1$s km</string>
+    <string name="due_over_km">quá %1$s km</string>
+    <plurals name="due_in_days">
+        <item quantity="other">còn %1$d ngày</item>
+    </plurals>
+    <plurals name="due_over_days">
+        <item quantity="other">quá %1$d ngày</item>
+    </plurals>
+    <string name="due_today">hôm nay</string>
+
+    <string name="stats_title">Thống kê</string>
+    <string name="stats_cost_title">Chi phí theo tháng</string>
+    <string name="stats_economy_title">Mức tiêu hao theo tháng</string>
+    <string name="stats_economy_empty">Cần hai lần đổ đầy bình trong cùng một đoạn. Tháng không có đoạn hoàn chỉnh sẽ để trống.</string>
+    <string name="stats_table_title">Theo tháng</string>
+    <string name="stats_no_value">–</string>
+    <string name="stats_chart_description">%1$s. %2$s</string>
+    <string name="stats_tap_hint">Chạm vào cột để xem giá trị.</string>
 </resources>

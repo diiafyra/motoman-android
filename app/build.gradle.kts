@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,6 +7,21 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
+
+// The Maps key lives in local.properties (never committed) or in the MAPS_API_KEY environment variable
+// that CI fills from a GitHub Secret. Without it the app still builds; the Nearby screen shows places
+// as a list and says the map is unavailable.
+val mapsApiKey: String =
+    Properties()
+        .apply {
+            rootProject
+                .file("local.properties")
+                .takeIf { it.exists() }
+                ?.inputStream()
+                ?.use(::load)
+        }.getProperty("MAPS_API_KEY")
+        ?: System.getenv("MAPS_API_KEY")
+        ?: ""
 
 android {
     namespace = "io.github.diiafyra.motoman"
@@ -20,6 +37,9 @@ android {
         // b = rc number (1-8), b = 9 for the final release. 0.5.0 -> 5009.
         versionCode = 5009
         versionName = "0.5.0"
+
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+        buildConfigField("boolean", "HAS_MAPS_KEY", (mapsApiKey.isNotBlank()).toString())
     }
 
     buildTypes {
@@ -85,6 +105,9 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)

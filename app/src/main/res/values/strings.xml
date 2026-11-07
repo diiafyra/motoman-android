@@ -230,4 +230,33 @@
     <string name="settings_about">About</string>
     <string name="settings_version">Version</string>
     <string name="settings_privacy">Privacy policy</string>
+
+    <!-- Nearby -->
+    <string name="nearby_title">Nearby</string>
+    <string name="nearby_permission_title">Find stations near you</string>
+    <string name="nearby_permission_body">Sổ Xe uses your approximate location, only while you look at this screen, to list fuel stations and garages within 3 km. Your location is not stored.</string>
+    <string name="nearby_permission_allow">Allow location</string>
+    <string name="nearby_permission_settings_body">Location is turned off for Sổ Xe. You can turn it on in the app settings.</string>
+    <string name="nearby_open_settings">Open settings</string>
+    <string name="nearby_locating">Finding your location…</string>
+    <string name="nearby_loading">Looking for stations… the map service can take up to a minute.</string>
+    <string name="nearby_location_unavailable_title">Cannot find your location</string>
+    <string name="nearby_location_unavailable_body">Turn on location services on your phone and try again.</string>
+    <string name="nearby_empty_title">Nothing within 3 km</string>
+    <string name="nearby_empty_body">No fuel stations or garages are mapped near you on OpenStreetMap.</string>
+    <string name="nearby_disabled_title">Nearby is paused</string>
+    <string name="nearby_disabled_body">This feature is switched off for now. The rest of the app works as usual.</string>
+    <string name="nearby_error_no_connection">No internet connection. Check it and try again.</string>
+    <string name="nearby_error_timeout">The service took too long to answer. Try again.</string>
+    <string name="nearby_error_server">The map service is busy or down. Try again in a moment.</string>
+    <string name="nearby_error_invalid">The map service sent something unexpected. Try again later.</string>
+    <string name="nearby_retry">Try again</string>
+    <string name="nearby_no_map">The map is not available in this build. Places are shown as a list.</string>
+    <string name="nearby_directions">Directions</string>
+    <string name="nearby_directions_named">Directions to %1$s</string>
+    <string name="nearby_distance_m">%1$s m</string>
+    <string name="nearby_distance_km">%1$s km</string>
+    <string name="nearby_unnamed_fuel">Fuel station</string>
+    <string name="nearby_unnamed_car_repair">Car garage</string>
+    <string name="nearby_unnamed_motorbike_repair">Motorbike garage</string>
 </resources>

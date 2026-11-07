@@ -22,5 +22,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "motoman-android"
 
+include(":app")
 include(":core:domain")
 include(":core:data")

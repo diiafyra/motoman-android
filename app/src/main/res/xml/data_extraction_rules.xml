@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Everything is backed up: until sync ships in v1.1, Auto Backup is the only way a user keeps
+    their logs when changing phones. S16 excludes the encrypted token store, whose Keystore key
+    cannot be restored on another device.
+-->
+<data-extraction-rules>
+    <cloud-backup />
+    <device-transfer />
+</data-extraction-rules>

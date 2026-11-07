@@ -111,6 +111,22 @@ tab lists items with `rankByUrgency` at the current odometer. Marking an item do
 through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
 touches its baseline.
 
+### Settings and language
+
+Settings holds the app language, the reminders switch, the version and the privacy policy link. The
+language is per app: `AppCompatLanguageController` calls `AppCompatDelegate.setApplicationLocales`,
+which uses the system per-app setting on Android 13+ and stores the choice itself below that (the
+`autoStoreLocales` service in the manifest). That is why `MainActivity` is an `AppCompatActivity` with
+an AppCompat theme. The build generates the locale config from the `values` and `values-vi` folders,
+so the system settings list exactly the languages the app has. Lint fails the build on any string
+missing a translation.
+
+### Testing the main flow
+
+`MainFlowTest` drives the real app, Room, DataStore, navigation and Hilt included, through adding a
+vehicle and logging a fill-up. It is a Compose UI test running on Robolectric with
+`HiltTestApplication`, so it runs in `./gradlew test` and in CI without an emulator.
+
 ### Reminders
 
 `ReminderWorker` is a periodic WorkManager job, first run at the next 9:00 and then daily; it only

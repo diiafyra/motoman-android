@@ -48,6 +48,28 @@ class FakePreferencesRepository(
     override suspend fun setSelectedVehicleId(id: String) {
         selectedId.value = id
     }
+
+    val remindersEnabled = MutableStateFlow(true)
+    var sentKeys: Set<String> = emptySet()
+    val promptDismissed = MutableStateFlow(false)
+
+    override fun observeRemindersEnabled(): Flow<Boolean> = remindersEnabled
+
+    override suspend fun setRemindersEnabled(enabled: Boolean) {
+        remindersEnabled.value = enabled
+    }
+
+    override suspend fun sentReminderKeys(): Set<String> = sentKeys
+
+    override suspend fun setSentReminderKeys(keys: Set<String>) {
+        sentKeys = keys
+    }
+
+    override fun observeNotificationPromptDismissed(): Flow<Boolean> = promptDismissed
+
+    override suspend fun setNotificationPromptDismissed() {
+        promptDismissed.value = true
+    }
 }
 
 /** Ids "id-1", "id-2", … so tests can predict them. */

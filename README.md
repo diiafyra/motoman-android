@@ -4,9 +4,11 @@ An Android app for motorbike and car owners in Vietnam: log every fill-up, see r
 cost per kilometre, and get reminded before maintenance is due. Everything works offline; the network
 only adds things on top, such as nearby fuel stations and garages.
 
-> Status: feature-complete for v1.0, waiting for a release candidate. Everything offline works, plus
-> Nearby, crash reporting and remote settings. Accounts and sync are planned for v1.1. What is left
-> before the first release is listed in [docs/release.md](docs/release.md). Changes are in
+> Status: release candidate 1.0.0-rc.1. Everything offline works, plus Nearby, crash reporting and
+> remote settings; accounts and sync are planned for v1.1. What a release needs is in
+> [docs/release.md](docs/release.md), the privacy policy is published in
+> [English](https://diiafyra.github.io/motoman-android/privacy/) and
+> [Vietnamese](https://diiafyra.github.io/motoman-android/privacy-vi/), and changes are in
 > [CHANGELOG.md](CHANGELOG.md).
 
 ## Features

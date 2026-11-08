@@ -33,6 +33,8 @@ Create a Firebase project, add an Android app with the package `io.github.diiafy
 (number) and `nearby_enabled` (boolean). Without the file the app builds and runs with no analytics and
 the built-in settings.
 
+Signing and release secrets are described in [release.md](release.md).
+
 Other secrets are added here as they are needed. When they are, they go in `local.properties` or in files listed in
 `.gitignore`, never in the repository, and CI reads them from GitHub Secrets. This page lists each one
 as it is added.

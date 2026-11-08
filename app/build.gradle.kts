@@ -23,6 +23,25 @@ val mapsApiKey: String =
         ?: System.getenv("MAPS_API_KEY")
         ?: ""
 
+// Release signing. The upload key is never in the repository: it comes from keystore.properties (git-ignored)
+// next to the root build file, or from SIGNING_* environment variables that CI fills from GitHub Secrets.
+// Without either, the release build is simply unsigned, which is what CI's R8 check and contributors get.
+val signingProps =
+    Properties().apply {
+        rootProject
+            .file("keystore.properties")
+            .takeIf { it.exists() }
+            ?.inputStream()
+            ?.use(::load)
+    }
+
+fun signingValue(
+    property: String,
+    environment: String,
+): String? = signingProps.getProperty(property) ?: System.getenv(environment)
+
+val releaseStoreFile: String? = signingValue("storeFile", "SIGNING_STORE_FILE")
+
 // Firebase is on only when google-services.json is present (it is never committed). Without it the app
 // builds and runs with no-op analytics and built-in settings, which is what CI and contributors use.
 val firebaseConfigured: Boolean = file("google-services.json").exists()
@@ -51,9 +70,25 @@ android {
         buildConfigField("boolean", "FIREBASE_ENABLED", firebaseConfigured.toString())
     }
 
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = rootProject.file(releaseStoreFile)
+                storePassword = signingValue("storePassword", "SIGNING_STORE_PASSWORD")
+                keyAlias = signingValue("keyAlias", "SIGNING_KEY_ALIAS")
+                keyPassword = signingValue("keyPassword", "SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8 shrinks and obfuscates the code and removes unused resources. Crashlytics uploads the
+            // mapping file so release crashes are readable.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 

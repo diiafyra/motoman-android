@@ -44,6 +44,11 @@ All notable changes to this project are documented here. The format follows
   owner's manual.
 - A test that checks, on every screen, that each clickable element has a name and a touch target of
   at least 48 dp.
+- Release builds are minified and shrunk with R8, and signed when a keystore is provided through
+  `keystore.properties` or `SIGNING_*` variables. CI builds the unsigned release on every pull request.
+- A Release workflow, run by a version tag, that checks the tag against `versionName` and `versionCode`,
+  builds the signed bundle and APK, and publishes a GitHub release.
+- `docs/release.md`: the upload key, the secrets, how to cut a version and the Play Console steps.
 - Nearby state changes are announced to TalkBack.
 - Settings: app language (phone, Tiếng Việt, English), reminders on or off, version and privacy policy.
 - Per-app language on every supported Android version.

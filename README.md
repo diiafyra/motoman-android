@@ -33,6 +33,9 @@ Available now:
   switched off remotely.
 - Crash reports and four usage events, in release builds only, with no personal data. The "due soon"
   limits and a switch for the Nearby tab can be changed remotely without an update.
+- Accessibility: every control has a name TalkBack can read and a touch target of at least 48 dp,
+  checked on every screen by a test; state changes on the Nearby screen are announced; the app is
+  checked in dark mode, with the largest system font, and in landscape.
 - Form errors shown next to each field, and read out by TalkBack.
 - Vietnamese and English, chosen per app in Settings (or following the phone), on every supported
   Android version. Settings also turns reminders off and links the privacy policy.
@@ -60,6 +63,10 @@ Available now:
 | Tổng quan | Bảo dưỡng | Cài đặt |
 | --- | --- | --- |
 | <img src="docs/screenshots/overview-vi.png" width="240" alt="Overview in Vietnamese"> | <img src="docs/screenshots/maintenance-vi.png" width="240" alt="Maintenance in Vietnamese"> | <img src="docs/screenshots/settings-vi.png" width="240" alt="Settings in Vietnamese with the language choice"> |
+
+| Overview (dark) | Maintenance (dark) | Fuel log (dark) |
+| --- | --- | --- |
+| <img src="docs/screenshots/overview-dark.png" width="240" alt="Overview in dark mode"> | <img src="docs/screenshots/maintenance-dark.png" width="240" alt="Maintenance in dark mode"> | <img src="docs/screenshots/fuel-dark.png" width="240" alt="Fuel log in dark mode"> |
 
 | Fill-up form | Fuel log | Undo |
 | --- | --- | --- |

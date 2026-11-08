@@ -159,6 +159,23 @@ an AppCompat theme. The build generates the locale config from the `values` and 
 so the system settings list exactly the languages the app has. Lint fails the build on any string
 missing a translation.
 
+### Accessibility
+
+`AccessibilityAuditTest` walks the main flow and, on each screen, checks two things in the semantics
+tree: everything clickable has a name (text or content description), and its touch bounds are at
+least 48 dp each way (Material buttons are drawn 40 dp tall but accept touches in 48 dp, which is why
+the test reads `touchBoundsInRoot`). A failure names the screen and the element.
+
+I first tried Android's own accessibility test framework through Compose's
+`enableAccessibilityChecks()`. It passed even after I removed a button's label on purpose, so I
+dropped it rather than keep a test that gives false confidence. The direct audit failed on the same
+sabotage, and on its first real run it found a defect: the floating "add" buttons reached the
+accessibility tree with no name. They now go through `AddFab`, which states the label.
+
+Beyond that: errors on form fields are exposed as semantic errors, toggles and radio rows are one
+touch target with a role, swipe-to-delete has the same action as a TalkBack custom action, and the
+Nearby screen announces state changes with a polite live region.
+
 ### Testing the main flow
 
 `MainFlowTest` drives the real app, Room, DataStore, navigation and Hilt included, through adding a

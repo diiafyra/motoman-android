@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.0.0-rc.1] - 2026-11-08
+
 ### Fixed
 
 - Firebase is used only when it has actually started, not just when `google-services.json` exists.
@@ -86,6 +88,7 @@ All notable changes to this project are documented here. The format follows
 
 - The project builds with JDK 21, which Robolectric needs for the Android 16 sandbox.
 
-[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/diiafyra/motoman-android/compare/v1.0.0-rc.1...HEAD
+[1.0.0-rc.1]: https://github.com/diiafyra/motoman-android/compare/v0.5.0...v1.0.0-rc.1
 [0.5.0]: https://github.com/diiafyra/motoman-android/compare/v0.1.0...v0.5.0
 [0.1.0]: https://github.com/diiafyra/motoman-android/releases/tag/v0.1.0

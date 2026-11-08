@@ -23,6 +23,14 @@ val mapsApiKey: String =
         ?: System.getenv("MAPS_API_KEY")
         ?: ""
 
+// Firebase is on only when google-services.json is present (it is never committed). Without it the app
+// builds and runs with no-op analytics and built-in settings, which is what CI and contributors use.
+val firebaseConfigured: Boolean = file("google-services.json").exists()
+if (firebaseConfigured) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
+}
+
 android {
     namespace = "io.github.diiafyra.motoman"
     compileSdk {
@@ -40,6 +48,7 @@ android {
 
         manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
         buildConfigField("boolean", "HAS_MAPS_KEY", (mapsApiKey.isNotBlank()).toString())
+        buildConfigField("boolean", "FIREBASE_ENABLED", firebaseConfigured.toString())
     }
 
     buildTypes {
@@ -105,6 +114,10 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.config)
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)

@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
 import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
 import io.github.diiafyra.motoman.core.domain.maintenance.templateItems
 import io.github.diiafyra.motoman.core.domain.model.FuelType
@@ -51,6 +53,7 @@ class VehicleEditViewModel
         private val preferences: PreferencesRepository,
         private val idGenerator: IdGenerator,
         private val templateNames: TemplateNames,
+        private val analytics: AnalyticsTracker,
     ) : ViewModel() {
         // Navigation puts VehicleEditRoute.vehicleId into the saved state under its property name.
         private val vehicleId: String? = savedStateHandle["vehicleId"]
@@ -118,6 +121,7 @@ class VehicleEditViewModel
                     // A new vehicle starts with the usual maintenance items, and becomes the selected one.
                     maintenance.saveItems(templateItems(vehicle, templateNames, idGenerator))
                     preferences.setSelectedVehicleId(vehicle.id)
+                    analytics.track(AnalyticsEvent.VEHICLE_ADDED)
                 }
                 state.update { it.copy(isSaving = false, isDone = true) }
             }

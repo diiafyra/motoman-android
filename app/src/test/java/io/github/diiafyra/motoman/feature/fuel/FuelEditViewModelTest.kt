@@ -1,10 +1,12 @@
 package io.github.diiafyra.motoman.feature.fuel
 
 import androidx.lifecycle.SavedStateHandle
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
 import io.github.diiafyra.motoman.core.domain.fuel.CostError
 import io.github.diiafyra.motoman.core.domain.fuel.FuelEntryErrors
 import io.github.diiafyra.motoman.core.domain.fuel.OdometerError
 import io.github.diiafyra.motoman.core.domain.fuel.VolumeError
+import io.github.diiafyra.motoman.testing.FakeAnalytics
 import io.github.diiafyra.motoman.testing.FakeClock
 import io.github.diiafyra.motoman.testing.FakeFuelEntryRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
@@ -26,6 +28,7 @@ class FuelEditViewModelTest {
     val mainDispatcher = MainDispatcherRule()
 
     private val clock = FakeClock()
+    private val analytics = FakeAnalytics()
     private val vehicles = FakeVehicleRepository(testVehicle(id = "v1", initialOdometerKm = 12_000))
 
     // Two earlier fill-ups: 1 Nov at 12,300 km and 5 Nov at 12,450 km.
@@ -40,6 +43,7 @@ class FuelEditViewModelTest {
             fuel,
             clock,
             SequentialIdGenerator(),
+            analytics,
         )
 
     private fun FuelEditViewModel.fill(
@@ -127,6 +131,7 @@ class FuelEditViewModelTest {
         assertFalse(saved.isFullTank)
         assertTrue(saved.missedPrevious)
         assertEquals("Petrolimex", saved.note)
+        assertEquals(listOf(AnalyticsEvent.FUEL_LOGGED), analytics.events)
         assertTrue(viewModel.uiState.value.isDone)
     }
 
@@ -176,6 +181,7 @@ class FuelEditViewModelTest {
         assertEquals(nov5.filledAt, saved.filledAt)
         assertEquals(101_000L, saved.totalCostVnd)
         assertEquals(2, fuel.entries.size)
+        assertTrue("editing is not logging", analytics.events.isEmpty())
     }
 
     @Test

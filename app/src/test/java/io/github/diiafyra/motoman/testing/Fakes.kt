@@ -1,5 +1,8 @@
 package io.github.diiafyra.motoman.testing
 
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
+import io.github.diiafyra.motoman.core.domain.maintenance.DueSoonThreshold
 import io.github.diiafyra.motoman.core.domain.maintenance.withRecord
 import io.github.diiafyra.motoman.core.domain.model.FuelEntry
 import io.github.diiafyra.motoman.core.domain.model.FuelType
@@ -9,6 +12,7 @@ import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.core.domain.model.VehicleType
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
 import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
+import io.github.diiafyra.motoman.core.domain.repository.MaintenanceSettings
 import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.repository.VehicleRepository
 import io.github.diiafyra.motoman.core.domain.util.Clock
@@ -203,3 +207,19 @@ fun testItem(
     lastDoneDate: LocalDate? = null,
     vehicleId: String = "v1",
 ) = MaintenanceItem(id, vehicleId, name, intervalKm, intervalMonths, lastDoneKm, lastDoneDate)
+
+class FakeAnalytics : AnalyticsTracker {
+    val events = mutableListOf<AnalyticsEvent>()
+
+    override fun track(event: AnalyticsEvent) {
+        events += event
+    }
+}
+
+class FakeMaintenanceSettings(
+    threshold: DueSoonThreshold = DueSoonThreshold.DEFAULT,
+) : MaintenanceSettings {
+    val threshold = MutableStateFlow(threshold)
+
+    override fun observeDueSoonThreshold(): Flow<DueSoonThreshold> = threshold
+}

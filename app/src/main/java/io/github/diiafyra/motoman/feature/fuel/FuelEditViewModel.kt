@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
 import io.github.diiafyra.motoman.core.domain.fuel.FuelEntryDraft
 import io.github.diiafyra.motoman.core.domain.fuel.FuelEntryErrors
 import io.github.diiafyra.motoman.core.domain.fuel.parseVolumeMl
@@ -58,6 +60,7 @@ class FuelEditViewModel
         private val fuel: FuelEntryRepository,
         private val clock: Clock,
         private val idGenerator: IdGenerator,
+        private val analytics: AnalyticsTracker,
     ) : ViewModel() {
         private val vehicleId: String = requireNotNull(savedStateHandle["vehicleId"])
         private val entryId: String? = savedStateHandle["entryId"]
@@ -151,6 +154,8 @@ class FuelEditViewModel
                         note = current.note.trim(),
                     ),
                 )
+                // Editing a fill-up is not logging one.
+                if (entryId == null) analytics.track(AnalyticsEvent.FUEL_LOGGED)
                 state.update { it.copy(isSaving = false, isDone = true) }
             }
         }

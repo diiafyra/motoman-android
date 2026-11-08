@@ -3,6 +3,8 @@ package io.github.diiafyra.motoman.feature.nearby
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
 import io.github.diiafyra.motoman.core.domain.model.GeoPoint
 import io.github.diiafyra.motoman.core.domain.model.Place
 import io.github.diiafyra.motoman.core.domain.model.distanceMeters
@@ -63,11 +65,17 @@ class NearbyViewModel
         private val findNearby: FindNearbyPlaces,
         private val location: LocationProvider,
         private val flags: FeatureFlags,
+        analytics: AnalyticsTracker,
     ) : ViewModel() {
         private val state = MutableStateFlow<NearbyUiState>(NearbyUiState.NeedsPermission())
         val uiState: StateFlow<NearbyUiState> = state.asStateFlow()
 
         private var job: Job? = null
+
+        init {
+            // One per visit to the tab: the ViewModel lives as long as its screen does.
+            analytics.track(AnalyticsEvent.NEARBY_OPENED)
+        }
 
         /** The screen reports what the system said, so the state matches the permission. */
         fun onPermissionResult(

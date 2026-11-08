@@ -1,5 +1,6 @@
 package io.github.diiafyra.motoman.feature.nearby
 
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
 import io.github.diiafyra.motoman.core.domain.model.GeoPoint
 import io.github.diiafyra.motoman.core.domain.model.Place
 import io.github.diiafyra.motoman.core.domain.model.PlaceKind
@@ -9,6 +10,7 @@ import io.github.diiafyra.motoman.core.domain.repository.FeatureFlags
 import io.github.diiafyra.motoman.core.domain.repository.PlacesRepository
 import io.github.diiafyra.motoman.core.domain.result.AppResult
 import io.github.diiafyra.motoman.core.domain.result.DataError
+import io.github.diiafyra.motoman.testing.FakeAnalytics
 import io.github.diiafyra.motoman.testing.FakeClock
 import io.github.diiafyra.motoman.testing.MainDispatcherRule
 import kotlinx.coroutines.CompletableDeferred
@@ -31,7 +33,19 @@ class NearbyViewModelTest {
     private val location = FakeLocation(here)
     private val flags = FakeFlags()
 
-    private fun viewModel() = NearbyViewModel(FindNearbyPlaces(places, PlacesCache(), FakeClock()), location, flags)
+    private val analytics = FakeAnalytics()
+
+    private fun viewModel() =
+        NearbyViewModel(FindNearbyPlaces(places, PlacesCache(), FakeClock()), location, flags, analytics)
+
+    @Test
+    fun `opening the tab is reported once, however often it retries`() {
+        val viewModel = viewModel()
+        viewModel.load()
+        viewModel.load()
+
+        assertEquals(listOf(AnalyticsEvent.NEARBY_OPENED), analytics.events)
+    }
 
     @Test
     fun `starts by asking for permission`() {

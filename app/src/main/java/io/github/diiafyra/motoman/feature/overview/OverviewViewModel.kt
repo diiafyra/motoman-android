@@ -10,6 +10,7 @@ import io.github.diiafyra.motoman.core.domain.maintenance.currentOdometerKm
 import io.github.diiafyra.motoman.core.domain.maintenance.rankByUrgency
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
 import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
+import io.github.diiafyra.motoman.core.domain.repository.MaintenanceSettings
 import io.github.diiafyra.motoman.core.domain.usecase.ObserveSelectedVehicle
 import io.github.diiafyra.motoman.core.domain.util.Clock
 import io.github.diiafyra.motoman.feature.vehicle.STOP_TIMEOUT_MS
@@ -56,6 +57,7 @@ class OverviewViewModel
         observeSelectedVehicle: ObserveSelectedVehicle,
         fuel: FuelEntryRepository,
         maintenance: MaintenanceRepository,
+        settings: MaintenanceSettings,
         clock: Clock,
     ) : ViewModel() {
         @OptIn(ExperimentalCoroutinesApi::class)
@@ -67,7 +69,8 @@ class OverviewViewModel
                         fuel.observeEntries(vehicle.id),
                         maintenance.observeItems(vehicle.id),
                         maintenance.observeRecords(vehicle.id),
-                    ) { entries, items, records ->
+                        settings.observeDueSoonThreshold(),
+                    ) { entries, items, records, threshold ->
                         val economy = calculateFuelEconomy(entries)
                         val latest = economy.latest
                         val newestFull = entries.filter { it.isFullTank }.maxByOrNull { it.filledAt }
@@ -91,7 +94,7 @@ class OverviewViewModel
                             monthVolumeMl = inMonth.sumOf { it.volumeMl },
                             odometerKm = odometer,
                             attention =
-                                rankByUrgency(items, odometer, today)
+                                rankByUrgency(items, odometer, today, threshold)
                                     .filter {
                                         it.status is MaintenanceStatus.Overdue ||
                                             it.status is MaintenanceStatus.DueSoon

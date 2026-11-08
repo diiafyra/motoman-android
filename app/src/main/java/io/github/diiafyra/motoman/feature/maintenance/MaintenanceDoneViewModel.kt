@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceRecordDraft
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceRecordErrors
 import io.github.diiafyra.motoman.core.domain.maintenance.currentOdometerKm
@@ -48,6 +50,7 @@ class MaintenanceDoneViewModel
         private val maintenance: MaintenanceRepository,
         private val clock: Clock,
         private val idGenerator: IdGenerator,
+        private val analytics: AnalyticsTracker,
     ) : ViewModel() {
         private val vehicleId: String = requireNotNull(savedStateHandle["vehicleId"])
         private val itemId: String = requireNotNull(savedStateHandle["itemId"])
@@ -114,6 +117,7 @@ class MaintenanceDoneViewModel
                         note = current.note.trim(),
                     ),
                 )
+                analytics.track(AnalyticsEvent.MAINTENANCE_DONE)
                 state.update { it.copy(isSaving = false, isDone = true) }
             }
         }

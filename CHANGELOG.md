@@ -14,6 +14,10 @@ All notable changes to this project are documented here. The format follows
   when a Maps key is configured, and a state for every outcome (no permission, no position, offline,
   slow or failed service, no results, switched off).
 - Results cached in memory per 1 km cell for 30 minutes.
+- Crashlytics and four Analytics events (`vehicle_added`, `fuel_logged`, `maintenance_done`,
+  `nearby_opened`), in release builds only and with no personal data.
+- Remote Config for the due-soon distance and days and a switch for the Nearby tab, with defaults in
+  code. The app builds and runs without a Firebase project.
 
 ## [0.5.0] - 2026-11-08
 

@@ -1,6 +1,7 @@
 package io.github.diiafyra.motoman.feature.vehicle
 
 import androidx.lifecycle.SavedStateHandle
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
 import io.github.diiafyra.motoman.core.domain.maintenance.TemplateNames
 import io.github.diiafyra.motoman.core.domain.model.FuelType
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
@@ -8,6 +9,7 @@ import io.github.diiafyra.motoman.core.domain.model.VehicleType
 import io.github.diiafyra.motoman.core.domain.vehicle.InitialOdometerError
 import io.github.diiafyra.motoman.core.domain.vehicle.VehicleErrors
 import io.github.diiafyra.motoman.core.domain.vehicle.VehicleNameError
+import io.github.diiafyra.motoman.testing.FakeAnalytics
 import io.github.diiafyra.motoman.testing.FakeMaintenanceRepository
 import io.github.diiafyra.motoman.testing.FakePreferencesRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
@@ -28,6 +30,7 @@ class VehicleEditViewModelTest {
     private val vehicles = FakeVehicleRepository()
     private val preferences = FakePreferencesRepository()
     private val maintenance = FakeMaintenanceRepository()
+    private val analytics = FakeAnalytics()
 
     private fun viewModel(vehicleId: String? = null) =
         VehicleEditViewModel(
@@ -37,6 +40,7 @@ class VehicleEditViewModelTest {
             preferences,
             SequentialIdGenerator(),
             TemplateNames { it.name },
+            analytics,
         )
 
     @Test
@@ -99,6 +103,7 @@ class VehicleEditViewModelTest {
             maintenance.items.value.map { it.name },
         )
         assertTrue(maintenance.items.value.all { it.vehicleId == "id-1" })
+        assertEquals(listOf(AnalyticsEvent.VEHICLE_ADDED), analytics.events)
     }
 
     @Test
@@ -124,6 +129,7 @@ class VehicleEditViewModelTest {
         assertEquals("v2", preferences.selectedId.value)
         assertTrue(viewModel.uiState.value.isDone)
         assertTrue("editing adds no items", maintenance.items.value.isEmpty())
+        assertTrue("and is not reported as a new vehicle", analytics.events.isEmpty())
     }
 
     @Test

@@ -31,6 +31,8 @@ Available now:
   your maps app. Location is asked for only on this screen, and every outcome has its own state:
   no permission, refused for good, no position, offline, slow or busy server, no results, and
   switched off remotely.
+- Crash reports and four usage events, in release builds only, with no personal data. The "due soon"
+  limits and a switch for the Nearby tab can be changed remotely without an update.
 - Form errors shown next to each field, and read out by TalkBack.
 - Vietnamese and English, chosen per app in Settings (or following the phone), on every supported
   Android version. Settings also turns reminders off and links the privacy policy.
@@ -93,6 +95,7 @@ Each library is here because a feature needs it.
 | Navigation | Navigation Compose with type-safe routes |
 | Dependency injection | Hilt |
 | Storage | Room (exported schemas, soft delete), tested with Robolectric; Preferences DataStore |
+| Monitoring | Firebase Crashlytics, Analytics and Remote Config through the BoM; the app runs without a Firebase project |
 | Maps and location | Maps Compose, Fused Location (approximate, only while the screen is open) |
 | Network | Retrofit, OkHttp, kotlinx.serialization; errors as values, retry for GET only; tested with MockWebServer |
 | Background work | WorkManager with Hilt workers |

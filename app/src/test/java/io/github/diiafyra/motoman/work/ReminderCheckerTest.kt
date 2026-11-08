@@ -1,10 +1,12 @@
 package io.github.diiafyra.motoman.work
 
+import io.github.diiafyra.motoman.core.domain.maintenance.DueSoonThreshold
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceStatus
 import io.github.diiafyra.motoman.core.domain.maintenance.Reminder
 import io.github.diiafyra.motoman.testing.FakeClock
 import io.github.diiafyra.motoman.testing.FakeFuelEntryRepository
 import io.github.diiafyra.motoman.testing.FakeMaintenanceRepository
+import io.github.diiafyra.motoman.testing.FakeMaintenanceSettings
 import io.github.diiafyra.motoman.testing.FakePreferencesRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
 import io.github.diiafyra.motoman.testing.testFuelEntry
@@ -35,8 +37,9 @@ class ReminderCheckerTest {
         )
     private val preferences = FakePreferencesRepository()
     private val notifier = FakeNotifier()
+    private val settings = FakeMaintenanceSettings()
 
-    private val checker = ReminderChecker(vehicles, fuel, maintenance, preferences, FakeClock(), notifier)
+    private val checker = ReminderChecker(vehicles, fuel, maintenance, preferences, settings, FakeClock(), notifier)
 
     @Test
     fun `notifies due items of every vehicle and remembers them`() =
@@ -78,6 +81,19 @@ class ReminderCheckerTest {
 
             notifier.allowed = true
             assertEquals(2, checker.check())
+        }
+
+    @Test
+    fun `a wider remote limit makes more items due soon`() =
+        runTest {
+            // Due at 2,500 with the Wave at 1,900: 600 km left, outside the 500 km default.
+            maintenance.items.value +=
+                testItem("filter", name = "Filter", intervalKm = 1_500, lastDoneKm = 1_000, vehicleId = "wave")
+            assertEquals(2, checker.check())
+
+            preferences.sentKeys = emptySet()
+            settings.threshold.value = DueSoonThreshold(km = 800, days = 14)
+            assertEquals(3, checker.check())
         }
 
     private class FakeNotifier : ReminderNotifier {

@@ -4,12 +4,14 @@ An Android app for motorbike and car owners in Vietnam: log every fill-up, see r
 cost per kilometre, and get reminded before maintenance is due. Everything works offline; the network
 only adds things on top, such as nearby fuel stations and garages.
 
-> Status: early development. The project skeleton is in place; features land one pull request at a time.
-> See [CHANGELOG.md](CHANGELOG.md).
+> Status: feature-complete for v1.0, waiting for a release candidate. Everything offline works, plus
+> Nearby, crash reporting and remote settings. Accounts and sync are planned for v1.1. What is left
+> before the first release is listed in [docs/release.md](docs/release.md). Changes are in
+> [CHANGELOG.md](CHANGELOG.md).
 
 ## Features
 
-Available now:
+What the app does:
 
 - Overview: latest and average fuel economy (L/100 km), cost per km, this month's spending, the
   odometer, and the maintenance items that need attention.

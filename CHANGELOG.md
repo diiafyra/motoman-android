@@ -6,6 +6,10 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- The floating "add" buttons had no accessible name, so TalkBack read them as an unnamed button.
+
 ### Added
 
 - Network layer: OkHttp with timeouts, retry for GET only, build-type logging, and failures as values.
@@ -38,6 +42,9 @@ All notable changes to this project are documented here. The format follows
   and delete items, and the service history of each item.
 - A new vehicle starts with the usual maintenance items for its type, with a note to check the
   owner's manual.
+- A test that checks, on every screen, that each clickable element has a name and a touch target of
+  at least 48 dp.
+- Nearby state changes are announced to TalkBack.
 - Settings: app language (phone, Tiếng Việt, English), reminders on or off, version and privacy policy.
 - Per-app language on every supported Android version.
 - A UI test of the main flow, adding a vehicle and logging a fill-up, run on every pull request.

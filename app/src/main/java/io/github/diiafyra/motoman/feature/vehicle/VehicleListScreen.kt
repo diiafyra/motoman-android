@@ -8,10 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -33,6 +31,7 @@ import io.github.diiafyra.motoman.R
 import io.github.diiafyra.motoman.core.domain.model.FuelType
 import io.github.diiafyra.motoman.core.domain.model.Vehicle
 import io.github.diiafyra.motoman.core.domain.model.VehicleType
+import io.github.diiafyra.motoman.ui.designsystem.component.AddFab
 import io.github.diiafyra.motoman.ui.designsystem.component.EmptyState
 import io.github.diiafyra.motoman.ui.designsystem.component.LoadingState
 import io.github.diiafyra.motoman.ui.designsystem.theme.MotoManTheme
@@ -79,11 +78,7 @@ internal fun VehicleListContent(
         },
         floatingActionButton = {
             if (state.vehicles.isNotEmpty()) {
-                ExtendedFloatingActionButton(
-                    onClick = onAddVehicle,
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    text = { Text(stringResource(R.string.vehicle_add)) },
-                )
+                AddFab(label = stringResource(R.string.vehicle_add), onClick = onAddVehicle)
             }
         },
     ) { padding ->

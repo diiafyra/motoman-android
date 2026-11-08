@@ -28,6 +28,12 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
       - name: ktlint, lint, unit tests, debug build
         run: ./gradlew ktlintCheck lint test assembleDebug --console=plain
+      # Release shrinks and obfuscates with R8, which can break code the debug build does not. Unsigned, so
+      # no secrets are needed.
+      - name: Release build with R8
+        run: ./gradlew assembleRelease --console=plain
+      - name: Version script
+        run: scripts/check-version.sh "v$(sed -nE 's/^[[:space:]]*versionName = "([^"]+)".*/\1/p' app/build.gradle.kts)"
       - name: Upload reports
         if: failure()
         uses: actions/upload-artifact@v7

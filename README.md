@@ -109,7 +109,8 @@ Each library is here because a feature needs it.
 | Localisation | Per-app language with AppCompat, generated locale config |
 | Testing | JUnit, kotlinx-coroutines-test, Turbine, fake repositories; Compose UI tests on Robolectric with Hilt |
 | Build | Gradle version catalog, KSP, JDK 21 |
-| Code quality | ktlint, Android Lint, GitHub Actions on every pull request |
+| Code quality | ktlint, Android Lint, GitHub Actions on every pull request, including an R8 release build |
+| Release | Signing from outside the repository, R8, a tag-triggered workflow that checks the tag against `versionCode` |
 
 Maps Compose and Firebase are added
 by the features that use them.
@@ -122,6 +123,7 @@ Requirements: JDK 21 and the Android SDK with platform 37.
 ./gradlew assembleDebug          # build the debug APK
 ./gradlew test                   # unit tests and the main-flow UI test (Robolectric, no emulator)
 ./gradlew ktlintCheck lint       # style and static checks, same as CI
+./gradlew assembleRelease        # release build with R8, unsigned without a keystore (see docs/release.md)
 ```
 
 No secrets are needed yet. See [docs/setup.md](docs/setup.md) for local configuration.

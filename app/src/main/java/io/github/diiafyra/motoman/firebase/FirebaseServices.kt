@@ -2,12 +2,14 @@ package io.github.diiafyra.motoman.firebase
 
 import android.content.Context
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.crashlytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
+import io.github.diiafyra.motoman.BuildConfig
 import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
 import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsTracker
 import io.github.diiafyra.motoman.core.domain.maintenance.DueSoonThreshold
@@ -17,7 +19,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 
-/** Only created when the build has a `google-services.json`: without a Firebase app these calls would throw. */
+/**
+ * Whether Firebase can be used right now: the build has a `google-services.json` **and** the Firebase app
+ * actually started. Checking only the first would crash in places that never start it, such as tests on
+ * the JVM run on a machine that has the file. Without a Firebase app every call below would throw.
+ */
+fun isFirebaseAvailable(context: Context): Boolean =
+    BuildConfig.FIREBASE_ENABLED && FirebaseApp.getApps(context).isNotEmpty()
+
+/** Only called when [isFirebaseAvailable]. */
 object FirebaseSetup {
     /**
      * Debug builds report nothing, so development does not pollute the crash and usage numbers. Release

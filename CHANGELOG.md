@@ -8,10 +8,14 @@ All notable changes to this project are documented here. The format follows
 
 ### Fixed
 
+- Firebase is used only when it has actually started, not just when `google-services.json` exists.
+  With the file on a machine, the UI tests crashed because Firebase never starts on the JVM.
 - The floating "add" buttons had no accessible name, so TalkBack read them as an unnamed button.
 
 ### Added
 
+- Privacy policy in English and Vietnamese, with a contact address, published with GitHub Pages. The
+  Settings screen opens the one that matches the app language.
 - Network layer: OkHttp with timeouts, retry for GET only, build-type logging, and failures as values.
 - Overpass client for fuel stations and garages around a point.
 - Nearby tab: location permission flow, places within 3 km sorted by distance with directions, a map

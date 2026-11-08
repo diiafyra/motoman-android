@@ -26,6 +26,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -56,6 +57,7 @@ internal fun SettingsContent(
     onRemindersChange: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
+    val language = LocalConfiguration.current.locales[0].language
     Scaffold(
         topBar = {
             TopAppBar(
@@ -110,7 +112,7 @@ internal fun SettingsContent(
                 headlineContent = { Text(stringResource(R.string.settings_privacy)) },
                 modifier =
                     Modifier.clickable {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, PRIVACY_POLICY_URL.toUri()))
+                        context.startActivity(Intent(Intent.ACTION_VIEW, privacyPolicyUrl(language).toUri()))
                     },
             )
         }
@@ -136,4 +138,8 @@ private fun SectionTitle(text: String) {
     )
 }
 
-private const val PRIVACY_POLICY_URL = "https://github.com/diiafyra/motoman-android/blob/main/docs/privacy.md"
+private const val PRIVACY_POLICY_BASE_URL = "https://diiafyra.github.io/motoman-android"
+
+/** The policy in the language the app is shown in: Vietnamese for "vi", English for anything else. */
+internal fun privacyPolicyUrl(languageTag: String): String =
+    if (languageTag == "vi") "$PRIVACY_POLICY_BASE_URL/privacy-vi/" else "$PRIVACY_POLICY_BASE_URL/privacy/"

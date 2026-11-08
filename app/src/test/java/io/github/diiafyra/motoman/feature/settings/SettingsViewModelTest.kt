@@ -56,4 +56,11 @@ class SettingsViewModelTest {
             applied = language
         }
     }
+
+    @Test
+    fun `the privacy policy opens in Vietnamese for a Vietnamese app and in English otherwise`() {
+        assertEquals("https://diiafyra.github.io/motoman-android/privacy-vi/", privacyPolicyUrl("vi"))
+        assertEquals("https://diiafyra.github.io/motoman-android/privacy/", privacyPolicyUrl("en"))
+        assertEquals("https://diiafyra.github.io/motoman-android/privacy/", privacyPolicyUrl("fr"))
+    }
 }

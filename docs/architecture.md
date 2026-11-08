@@ -112,6 +112,23 @@ tab lists items with `rankByUrgency` at the current odometer. Marking an item do
 through `recordDone`, which moves the item's baseline in the same transaction; editing an item never
 touches its baseline.
 
+### Monitoring and remote settings
+
+Firebase is optional at build time. The `google-services` and Crashlytics plugins are applied only when
+`app/google-services.json` exists (it is git-ignored), and `BuildConfig.FIREBASE_ENABLED` records it.
+Without the file, which is what CI and contributors have, `DefaultServices` supplies no-op analytics and
+the built-in settings, and Firebase classes are never touched (calling Firebase without an app would
+throw). With the file, `FirebaseAnalyticsTracker` and `RemoteConfigServices` take over; both are chosen
+once in `AppModule`, so nothing else knows which is in use.
+
+Debug builds collect nothing. Release builds report crashes and exactly four events:
+`vehicle_added`, `fuel_logged`, `maintenance_done` and `nearby_opened`. An event is a name and nothing
+else: no parameters, no ids, no values. Editing a record does not count as creating one.
+
+Remote Config holds `due_soon_km`, `due_soon_days` and `nearby_enabled`, with defaults in code that
+apply until the first fetch and whenever it fails. Values outside a sane range (a typo in the console)
+fall back to the default instead of reaching the app.
+
 ### Nearby
 
 `NearbyViewModel` walks one path: permission, position, request, result, and each step has a state

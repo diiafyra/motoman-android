@@ -8,6 +8,7 @@ import io.github.diiafyra.motoman.core.domain.maintenance.currentOdometerKm
 import io.github.diiafyra.motoman.core.domain.maintenance.rankByUrgency
 import io.github.diiafyra.motoman.core.domain.repository.FuelEntryRepository
 import io.github.diiafyra.motoman.core.domain.repository.MaintenanceRepository
+import io.github.diiafyra.motoman.core.domain.repository.MaintenanceSettings
 import io.github.diiafyra.motoman.core.domain.repository.PreferencesRepository
 import io.github.diiafyra.motoman.core.domain.usecase.ObserveSelectedVehicle
 import io.github.diiafyra.motoman.core.domain.util.Clock
@@ -43,6 +44,7 @@ class MaintenanceViewModel
         fuel: FuelEntryRepository,
         maintenance: MaintenanceRepository,
         private val preferences: PreferencesRepository,
+        settings: MaintenanceSettings,
         clock: Clock,
     ) : ViewModel() {
         @OptIn(ExperimentalCoroutinesApi::class)
@@ -54,14 +56,19 @@ class MaintenanceViewModel
                         fuel.observeEntries(vehicle.id),
                         maintenance.observeItems(vehicle.id),
                         maintenance.observeRecords(vehicle.id),
-                        preferences.observeRemindersEnabled(),
-                        preferences.observeNotificationPromptDismissed(),
-                    ) { entries, items, records, remindersOn, dismissed ->
+                        // Whether to offer notification permission, and the due-soon limits, as one input.
+                        combine(
+                            preferences.observeRemindersEnabled(),
+                            preferences.observeNotificationPromptDismissed(),
+                            settings.observeDueSoonThreshold(),
+                            ::Triple,
+                        ),
+                    ) { entries, items, records, (remindersOn, dismissed, threshold) ->
                         val odometer = currentOdometerKm(vehicle, entries, records)
                         MaintenanceUiState.Ready(
                             vehicleId = vehicle.id,
                             odometerKm = odometer,
-                            items = rankByUrgency(items, odometer, clock.today()),
+                            items = rankByUrgency(items, odometer, clock.today(), threshold),
                             mayAskForNotifications = remindersOn && !dismissed && items.isNotEmpty(),
                         )
                     }

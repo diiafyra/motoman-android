@@ -2,12 +2,14 @@ package io.github.diiafyra.motoman.feature.overview
 
 import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
+import io.github.diiafyra.motoman.core.domain.maintenance.DueSoonThreshold
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceStatus
 import io.github.diiafyra.motoman.core.domain.model.FuelEntry
 import io.github.diiafyra.motoman.core.domain.usecase.ObserveSelectedVehicle
 import io.github.diiafyra.motoman.testing.FakeClock
 import io.github.diiafyra.motoman.testing.FakeFuelEntryRepository
 import io.github.diiafyra.motoman.testing.FakeMaintenanceRepository
+import io.github.diiafyra.motoman.testing.FakeMaintenanceSettings
 import io.github.diiafyra.motoman.testing.FakePreferencesRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
 import io.github.diiafyra.motoman.testing.MainDispatcherRule
@@ -30,12 +32,14 @@ class OverviewViewModelTest {
     private val vehicles = FakeVehicleRepository(testVehicle(id = "v1", initialOdometerKm = 1_000))
     private val preferences = FakePreferencesRepository("v1")
     private val maintenance = FakeMaintenanceRepository()
+    private val settings = FakeMaintenanceSettings()
 
     private fun viewModel(vararg entries: FuelEntry) =
         OverviewViewModel(
             ObserveSelectedVehicle(vehicles, preferences),
             FakeFuelEntryRepository(*entries),
             maintenance,
+            settings,
             FakeClock(),
         )
 
@@ -114,6 +118,18 @@ class OverviewViewModelTest {
                 assertTrue(state.hasMaintenanceItems)
                 assertEquals(listOf("late-a", "late-b", "late-c"), state.attention.map { it.item.id })
                 assertTrue(state.attention.all { it.status is MaintenanceStatus.Overdue })
+            }
+        }
+
+    @Test
+    fun `the due-soon limit comes from the remote setting`() =
+        runTest {
+            // 600 km left: ok with the default 500 km limit, due soon with a limit of 800.
+            maintenance.items.value = listOf(testItem("oil", intervalKm = 1_000, lastDoneKm = 600))
+            settings.threshold.value = DueSoonThreshold(km = 800, days = 14)
+
+            viewModel().uiState.test {
+                assertEquals(listOf("oil"), awaitReady().attention.map { it.item.id })
             }
         }
 

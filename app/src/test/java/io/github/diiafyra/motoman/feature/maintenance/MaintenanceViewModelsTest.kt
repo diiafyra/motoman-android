@@ -2,15 +2,18 @@ package io.github.diiafyra.motoman.feature.maintenance
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import io.github.diiafyra.motoman.core.domain.analytics.AnalyticsEvent
 import io.github.diiafyra.motoman.core.domain.maintenance.IntervalError
 import io.github.diiafyra.motoman.core.domain.maintenance.ItemNameError
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceStatus
 import io.github.diiafyra.motoman.core.domain.maintenance.RecordOdometerError
 import io.github.diiafyra.motoman.core.domain.model.MaintenanceRecord
 import io.github.diiafyra.motoman.core.domain.usecase.ObserveSelectedVehicle
+import io.github.diiafyra.motoman.testing.FakeAnalytics
 import io.github.diiafyra.motoman.testing.FakeClock
 import io.github.diiafyra.motoman.testing.FakeFuelEntryRepository
 import io.github.diiafyra.motoman.testing.FakeMaintenanceRepository
+import io.github.diiafyra.motoman.testing.FakeMaintenanceSettings
 import io.github.diiafyra.motoman.testing.FakePreferencesRepository
 import io.github.diiafyra.motoman.testing.FakeVehicleRepository
 import io.github.diiafyra.motoman.testing.MainDispatcherRule
@@ -33,6 +36,7 @@ class MaintenanceViewModelsTest {
     val mainDispatcher = MainDispatcherRule()
 
     private val clock = FakeClock()
+    private val analytics = FakeAnalytics()
     private val today = LocalDate.of(2026, 11, 8)
     private val vehicles = FakeVehicleRepository(testVehicle(id = "v1", initialOdometerKm = 1_000))
     private val fuel = FakeFuelEntryRepository(testFuelEntry("f", Instant.parse("2026-11-01T03:00:00Z"), 5_000))
@@ -53,6 +57,7 @@ class MaintenanceViewModelsTest {
                     fuel,
                     maintenance,
                     FakePreferencesRepository(),
+                    FakeMaintenanceSettings(),
                     clock,
                 )
 
@@ -77,6 +82,7 @@ class MaintenanceViewModelsTest {
                     fuel,
                     maintenance,
                     preferences,
+                    FakeMaintenanceSettings(),
                     clock,
                 )
 
@@ -179,6 +185,7 @@ class MaintenanceViewModelsTest {
             maintenance,
             clock,
             SequentialIdGenerator(),
+            analytics,
         )
 
     @Test
@@ -210,6 +217,7 @@ class MaintenanceViewModelsTest {
                 .single { it.id == "tyres" }
                 .lastDoneKm,
         )
+        assertEquals(listOf(AnalyticsEvent.MAINTENANCE_DONE), analytics.events)
         assertTrue(viewModel.uiState.value.isDone)
     }
 
@@ -222,6 +230,7 @@ class MaintenanceViewModelsTest {
 
         assertEquals(RecordOdometerError.MISSING, viewModel.uiState.value.errors.odometer)
         assertTrue(maintenance.records.value.isEmpty())
+        assertTrue("nothing is reported for a failed save", analytics.events.isEmpty())
     }
 
     @Test

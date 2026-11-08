@@ -6,6 +6,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import io.github.diiafyra.motoman.firebase.FirebaseSetup
 import io.github.diiafyra.motoman.firebase.RemoteConfigRefresher
+import io.github.diiafyra.motoman.firebase.isFirebaseAvailable
 import io.github.diiafyra.motoman.work.AndroidReminderNotifier
 import io.github.diiafyra.motoman.work.ReminderWorker
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class MotoManApplication :
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.FIREBASE_ENABLED) {
+        if (isFirebaseAvailable(this)) {
             FirebaseSetup.configure(this, enabled = !BuildConfig.DEBUG)
             remoteConfig.refresh()
         }

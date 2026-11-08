@@ -23,6 +23,7 @@ import io.github.diiafyra.motoman.firebase.DefaultServices
 import io.github.diiafyra.motoman.firebase.FirebaseAnalyticsTracker
 import io.github.diiafyra.motoman.firebase.RemoteConfigRefresher
 import io.github.diiafyra.motoman.firebase.RemoteConfigServices
+import io.github.diiafyra.motoman.firebase.isFirebaseAvailable
 import io.github.diiafyra.motoman.work.AndroidReminderNotifier
 import io.github.diiafyra.motoman.work.ReminderNotifier
 import javax.inject.Singleton
@@ -36,7 +37,7 @@ object AppModule {
     fun services(
         @ApplicationContext context: Context,
     ): AppServices =
-        if (BuildConfig.FIREBASE_ENABLED) {
+        if (isFirebaseAvailable(context)) {
             // Debug builds fetch on every start so a console change shows up at once; release builds every 12 hours.
             val remote = RemoteConfigServices.create(if (BuildConfig.DEBUG) 0 else REMOTE_CONFIG_INTERVAL_SECONDS)
             AppServices(FirebaseAnalyticsTracker.create(context), remote, remote, remote)

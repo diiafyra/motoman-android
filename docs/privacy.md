@@ -1,6 +1,13 @@
+---
+title: Privacy policy
+permalink: /privacy/
+---
+
+[Tiếng Việt](privacy-vi.md) · English
+
 # Privacy policy: Sổ Xe
 
-Draft, published with the first release. Last updated: 2026-11-08.
+Last updated: 2026-11-08.
 
 Sổ Xe is a logbook for your own vehicles. This page lists what the app stores, where, and which
 permissions it asks for. It is updated in the same change as any feature that alters it.
@@ -43,4 +50,12 @@ You can withdraw the permission in system settings, or turn reminders off in the
 
 ## Contact
 
-Questions: open an issue at https://github.com/diiafyra/motoman-android/issues.
+Questions, or a request to know what is stored about you: trangsae.fw@gmail.com. Because the app has no
+account and sends nothing that identifies you, what can be looked up is limited to what your own device
+holds; you can see and delete all of it in the app. You can also open an issue at
+https://github.com/diiafyra/motoman-android/issues.
+
+## Changes
+
+If a new version changes what the app collects or the permissions it asks for, this page is updated in
+the same release, and the "Last updated" date above changes.

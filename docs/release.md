@@ -66,14 +66,17 @@ App Signing** certificate (Play Console, App integrity) as well as your upload k
 
 ## 4. Play Console
 
-- **Name.** Search Google Play for "Sổ Xe" before creating the app; the name cannot be reclaimed once
-  taken, and the package name `io.github.diiafyra.motoman` can never change.
+- **Name.** Search Google Play for "Sổ Xe" and close variants before creating the app, so yours is not
+  confused with an existing one. The display name can be changed later; the package name
+  `io.github.diiafyra.motoman` can never change after the first upload.
 - **Closed testing.** A new personal developer account must run a closed test with a minimum number of
   testers for a minimum number of days before it can ask for production access. The numbers have changed
   more than once, so read the current rule in Play Console before planning dates. Recruit testers early.
-- **Privacy policy.** Publish [privacy.md](privacy.md) at a public URL. The simplest is GitHub Pages
-  (Settings, Pages, deploy from `main`, folder `/docs`); read the text once before you submit it, since
-  you are the one who answers for it.
+- **Privacy policy.** Published with GitHub Pages from `main`, folder `/docs`, at
+  `https://diiafyra.github.io/motoman-android/privacy/` (English) and `.../privacy-vi/` (Vietnamese).
+  Paste the English URL into the Privacy policy field. The source is [privacy.md](privacy.md) and
+  [privacy-vi.md](privacy-vi.md); change both in the same pull request, and the app's Settings screen
+  links to the one that matches its language.
 - **Data safety form.** Answer from the policy. Collected: crash logs and diagnostics, app interactions
   (four events), approximate and precise location (processed to find nearby places, not stored). Shared
   with: Google (Firebase) as a processor; the public Overpass service receives coordinates. No data is

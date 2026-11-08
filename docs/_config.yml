@@ -1,0 +1,8 @@
+# GitHub Pages: publishes the privacy policy at https://diiafyra.github.io/motoman-android/privacy/
+title: Sổ Xe
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: false

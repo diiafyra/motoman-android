@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -109,6 +111,7 @@ internal fun NearbyContent(
     when (state) {
         NearbyUiState.Disabled -> {
             EmptyState(
+                announce = true,
                 title = stringResource(R.string.nearby_disabled_title),
                 body = stringResource(R.string.nearby_disabled_body),
                 icon = ImageVector.vectorResource(R.drawable.ic_nearby),
@@ -117,6 +120,7 @@ internal fun NearbyContent(
 
         is NearbyUiState.NeedsPermission -> {
             EmptyState(
+                announce = true,
                 title = stringResource(R.string.nearby_permission_title),
                 body =
                     stringResource(
@@ -141,6 +145,7 @@ internal fun NearbyContent(
 
         NearbyUiState.LocationUnavailable -> {
             EmptyState(
+                announce = true,
                 title = stringResource(R.string.nearby_location_unavailable_title),
                 body = stringResource(R.string.nearby_location_unavailable_body),
                 icon = ImageVector.vectorResource(R.drawable.ic_nearby),
@@ -151,6 +156,7 @@ internal fun NearbyContent(
 
         is NearbyUiState.Empty -> {
             EmptyState(
+                announce = true,
                 title = stringResource(R.string.nearby_empty_title),
                 body = stringResource(R.string.nearby_empty_body),
                 icon = ImageVector.vectorResource(R.drawable.ic_nearby),
@@ -161,6 +167,7 @@ internal fun NearbyContent(
 
         is NearbyUiState.Error -> {
             EmptyState(
+                announce = true,
                 title = stringResource(R.string.nearby_title),
                 body = stringResource(errorMessage(state.error)),
                 icon = ImageVector.vectorResource(R.drawable.ic_nearby),
@@ -185,7 +192,10 @@ private fun errorMessage(error: DataError): Int =
 
 @Composable
 private fun Progress(text: String) {
-    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+    Column(
+        Modifier.fillMaxSize().semantics { liveRegion = LiveRegionMode.Polite },
+        verticalArrangement = Arrangement.Center,
+    ) {
         LoadingState(Modifier.height(96.dp))
         Text(
             text,

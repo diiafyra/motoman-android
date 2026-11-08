@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +33,7 @@ import io.github.diiafyra.motoman.core.domain.maintenance.DuePoint
 import io.github.diiafyra.motoman.core.domain.maintenance.ItemStatus
 import io.github.diiafyra.motoman.core.domain.maintenance.MaintenanceStatus
 import io.github.diiafyra.motoman.core.domain.model.MaintenanceItem
+import io.github.diiafyra.motoman.ui.designsystem.component.AddFab
 import io.github.diiafyra.motoman.ui.designsystem.component.EmptyState
 import io.github.diiafyra.motoman.ui.designsystem.component.LoadingState
 import io.github.diiafyra.motoman.ui.designsystem.component.StatusBadge
@@ -70,11 +69,7 @@ internal fun MaintenanceContent(
         contentWindowInsets = WindowInsets(0),
         floatingActionButton = {
             if (ready.items.isNotEmpty()) {
-                ExtendedFloatingActionButton(
-                    onClick = { onAddItem(ready.vehicleId) },
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    text = { Text(stringResource(R.string.maintenance_add_item)) },
-                )
+                AddFab(label = stringResource(R.string.maintenance_add_item), onClick = { onAddItem(ready.vehicleId) })
             }
         },
     ) { padding ->

@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,9 +30,15 @@ fun EmptyState(
     icon: ImageVector? = null,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null,
+    /** Read out by TalkBack when it appears, for states the user did not navigate to (a failed request). */
+    announce: Boolean = false,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(32.dp),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(32.dp)
+                .semantics(mergeDescendants = true) { if (announce) liveRegion = LiveRegionMode.Polite },
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -59,6 +68,11 @@ fun EmptyState(
 @Composable
 private fun EmptyStatePreview() {
     MotoManTheme {
-        EmptyState(title = "No vehicles yet", body = "Add a vehicle to start logging.", actionLabel = "Add") {}
+        EmptyState(
+            title = "No vehicles yet",
+            body = "Add a vehicle to start logging.",
+            actionLabel = "Add",
+            onAction = {},
+        )
     }
 }

@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +42,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.diiafyra.motoman.R
 import io.github.diiafyra.motoman.core.domain.model.FuelEntry
+import io.github.diiafyra.motoman.ui.designsystem.component.AddFab
 import io.github.diiafyra.motoman.ui.designsystem.component.EmptyState
 import io.github.diiafyra.motoman.ui.designsystem.component.LoadingState
 import io.github.diiafyra.motoman.ui.designsystem.theme.MotoManTheme
@@ -97,11 +96,7 @@ internal fun FuelLogContent(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             if (state.months.isNotEmpty()) {
-                ExtendedFloatingActionButton(
-                    onClick = onAdd,
-                    icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    text = { Text(stringResource(R.string.fuel_log_add)) },
-                )
+                AddFab(label = stringResource(R.string.fuel_log_add), onClick = onAdd)
             }
         },
     ) { padding ->
